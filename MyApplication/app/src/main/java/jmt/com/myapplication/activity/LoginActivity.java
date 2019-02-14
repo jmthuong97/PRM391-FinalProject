@@ -1,9 +1,9 @@
 package jmt.com.myapplication.activity;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 
@@ -15,8 +15,6 @@ import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
-import com.google.android.gms.auth.api.signin.GoogleSignInClient;
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -30,10 +28,10 @@ import com.google.firebase.auth.GetTokenResult;
 import com.google.firebase.auth.GoogleAuthProvider;
 
 import jmt.com.myapplication.R;
+import jmt.com.myapplication.helpers.Helper;
 
 public class LoginActivity extends AppCompatActivity {
     private CallbackManager mCallbackManager;
-    private GoogleSignInClient mGoogleSignInClient;
     private FirebaseAuth mAuth;
     private static final String FACEBOOK = "FACEBOOK";
     private static final String GOOGLE = "GOOGLE";
@@ -46,7 +44,6 @@ public class LoginActivity extends AppCompatActivity {
 
         // Initialize Firebase Auth
         mAuth = FirebaseAuth.getInstance();
-
         loginWithFacebook();
         loginWithGoogle();
     }
@@ -55,18 +52,10 @@ public class LoginActivity extends AppCompatActivity {
         // Initialize Google Login button
         SignInButton buttonGoogleLogin = findViewById(R.id.btn_google);
         buttonGoogleLogin.setColorScheme(SignInButton.COLOR_DARK);
-
-        // Configure Google Sign In
-        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestIdToken("345185909456-oosi4vr959gt4i3k0q0vmlm2ki242j1f.apps.googleusercontent.com")
-                .requestEmail()
-                .build();
-
-        mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
         buttonGoogleLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent signInIntent = mGoogleSignInClient.getSignInIntent();
+                Intent signInIntent = Helper.getGoogleSignInClient(LoginActivity.this).getSignInIntent();
                 startActivityForResult(signInIntent, GOOGLE_SIGN_IN);
             }
         });

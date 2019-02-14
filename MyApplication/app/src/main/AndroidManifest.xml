@@ -13,7 +13,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".activity.MessageActivity"></activity>
+        <activity android:name=".activity.MessageActivity" />
         <activity
             android:name=".activity.HomeActivity"
             android:label="@string/title_activity_home"

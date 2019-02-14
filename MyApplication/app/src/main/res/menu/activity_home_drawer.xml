@@ -14,4 +14,13 @@
             android:title="Menu 2" />
     </group>
 
+    <group android:id="@+id/settings">
+        <item android:title="Settings">
+            <menu>
+                <item
+                    android:id="@+id/logout"
+                    android:title="Logout" />
+            </menu>
+        </item>
+    </group>
 </menu>

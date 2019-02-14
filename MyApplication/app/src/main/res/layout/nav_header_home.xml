@@ -16,6 +16,7 @@
         android:id="@+id/currentUserAvatar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:src="@mipmap/ic_launcher"
         app:civ_border_color="#00574B"
         app:civ_border_width="2dp" />
 

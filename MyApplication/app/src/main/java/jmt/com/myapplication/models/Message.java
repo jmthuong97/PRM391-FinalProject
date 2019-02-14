@@ -41,7 +41,7 @@ public class Message {
     }
 
     public User getSender() {
-        return Helper.GetCurrentUser();
+        return sender;
     }
 
     public void setSender(User sender) {

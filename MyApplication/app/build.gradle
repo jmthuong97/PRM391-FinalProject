@@ -1,6 +1,12 @@
 apply plugin: 'com.android.application'
 apply plugin: 'com.google.gms.google-services'
 
+// **************************************** //
+def FACEBOOK_APP_ID = '"' + FacebookAppId + '"' ?: '"Define Facebook App Id"'
+def REQUEST_ID_TOKEN = '"' + RequestIdToken + '"' ?: '"Define Request Id Token"'
+def FBLOGINPROTOCOLSCHEME = '"' + FBLoginProtocolScheme + '"' ?: '"Define Faceebook Login Protocol Scheme"'
+// **************************************** //
+
 android {
     compileSdkVersion 28
     defaultConfig {
@@ -10,6 +16,13 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        // **************************************** //
+        each {
+            type ->
+                type.resValue "string", "facebook_app_id", FACEBOOK_APP_ID
+                type.resValue "string", "fb_login_protocol_scheme", FBLOGINPROTOCOLSCHEME
+                type.buildConfigField "String", "RequestIdToken", REQUEST_ID_TOKEN
+        }
     }
     buildTypes {
         release {

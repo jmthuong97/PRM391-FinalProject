@@ -3,6 +3,7 @@ package jmt.com.myapplication.adapters;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -59,9 +60,9 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
     @Override
     public int getItemViewType(int position) {
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
-
-        if (messages.get(position).getSender().equals(currentUser.getUid())) return MSG_TYPE_LEFT;
-        else return MSG_TYPE_RIGHT;
+        if (messages.get(position).getSender().getUid().equals(currentUser.getUid()))
+            return MSG_TYPE_RIGHT;
+        else return MSG_TYPE_LEFT;
     }
 
     // view holder of user item

@@ -1,6 +1,8 @@
 package jmt.com.myapplication.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -15,9 +17,14 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.facebook.login.LoginManager;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+
 import jmt.com.myapplication.R;
-import jmt.com.myapplication.fragments.Menu2Fragment;
 import jmt.com.myapplication.fragments.GroupsFragment;
+import jmt.com.myapplication.fragments.Menu2Fragment;
 import jmt.com.myapplication.helpers.Helper;
 import jmt.com.myapplication.helpers.SetImageFromURL;
 import jmt.com.myapplication.models.User;
@@ -101,6 +108,8 @@ public class HomeActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
+        if (id == R.id.logout) logout();
+
         displaySelectedScreen(id);
         return true;
     }
@@ -125,5 +134,29 @@ public class HomeActivity extends AppCompatActivity
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
+    }
+
+    private void logout() {
+        FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+        if (firebaseAuth.getCurrentUser() == null) return;
+
+        String providerId = firebaseAuth.getCurrentUser().getProviders().get(0);
+        FirebaseAuth.getInstance().signOut();
+
+        if (providerId.equals("google.com"))
+            Helper.getGoogleSignInClient(HomeActivity.this).signOut().addOnCompleteListener(this,
+                    new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            finish();
+                            startActivity(new Intent(HomeActivity.this, LoginActivity.class));
+                        }
+                    });
+        else {
+            LoginManager.getInstance().logOut();
+            finish();
+            startActivity(new Intent(this, LoginActivity.class));
+        }
+
     }
 }
