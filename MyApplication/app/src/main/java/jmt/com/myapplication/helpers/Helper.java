@@ -1,8 +1,17 @@
 package jmt.com.myapplication.helpers;
 
 import android.app.Activity;
+import android.content.Context;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.net.Uri;
+import android.provider.MediaStore;
+import android.provider.OpenableColumns;
 import android.support.annotation.NonNull;
 import android.util.Log;
+import android.view.Window;
+import android.support.v7.widget.Toolbar;
+import android.widget.Toast;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -13,11 +22,18 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GetTokenResult;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.IOException;
+
 import jmt.com.myapplication.BuildConfig;
+import jmt.com.myapplication.activity.LoginActivity;
 import jmt.com.myapplication.interfaces.IAccessTokenCallback;
 import jmt.com.myapplication.models.User;
 
 public class Helper {
+
+    // get accessToken of current user login
     static void GetAccessToken(final IAccessTokenCallback callback) {
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
         if (currentUser != null) {
@@ -33,6 +49,7 @@ public class Helper {
         }
     }
 
+    // get GoogleSignInClient for google login
     public static GoogleSignInClient getGoogleSignInClient(Activity activity) {
         // Configure Google Sign In
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -43,6 +60,21 @@ public class Helper {
         return GoogleSignIn.getClient(activity, gso);
     }
 
+    // encode QR code from content
+    public static String encodeQRCode(String content) {
+        return BuildConfig.QRSecretKey.concat(content);
+    }
+
+    // Check if the QR code is in my system?
+    public static Boolean isCorrectQRCode(String code) {
+        return code.contains(BuildConfig.QRSecretKey);
+    }
+
+    public static String decodeQRCode(String code) {
+        return code.replace(BuildConfig.QRSecretKey, "");
+    }
+
+    // get information of current user
     public static User GetCurrentUser() {
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
         User user = null;
@@ -57,5 +89,47 @@ public class Helper {
             user.setUid(currentUser.getUid());
         }
         return user;
+    }
+
+    // get File name from Uri file path
+    public static String getFileName(Uri filePath, Activity activity) {
+        String fileName = null;
+        if (filePath.toString().startsWith("content://")) {
+            try (Cursor cursor = activity.getContentResolver().query(filePath, null, null, null, null)) {
+                if (cursor != null && cursor.moveToFirst()) {
+                    fileName = cursor.getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME));
+                }
+            }
+        } else if (filePath.toString().startsWith("file://")) {
+            File myFile = new File(filePath.toString());
+            fileName = myFile.getName();
+        }
+        return fileName;
+    }
+
+    // reduce quality of image
+    public static byte[] reduceSizeImage(Uri filePath, Activity activity) {
+        Bitmap bmp = null;
+        byte[] data = new byte[0];
+        try {
+            bmp = MediaStore.Images.Media.getBitmap(activity.getContentResolver(), filePath);
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            bmp.compress(Bitmap.CompressFormat.JPEG, 25, baos);
+            data = baos.toByteArray();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return data;
+    }
+
+    //
+    public static void setColorToolAndStatusBar(Toolbar toolbar, Window window, String mainColor) {
+        toolbar.setBackgroundColor(AutoColor.COLOR(mainColor).Main());
+        window.setStatusBarColor(AutoColor.COLOR(mainColor).Dark());
+    }
+
+    // make a toast message
+    public static void makeToastMessage(String message, Context context) {
+        Toast.makeText(context, message, Toast.LENGTH_LONG).show();
     }
 }

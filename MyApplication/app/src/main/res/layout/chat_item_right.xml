@@ -21,7 +21,6 @@
             android:text="hello"
             android:layout_alignParentEnd="true"
             android:textColor="#fff"
-            android:textSize="18sp"
             android:padding="8dp"/>
 
     </RelativeLayout>

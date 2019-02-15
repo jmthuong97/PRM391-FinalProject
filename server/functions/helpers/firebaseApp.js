@@ -10,8 +10,10 @@ const FirebaseAdmin = !admin.apps.length ?
     }) : admin.app();
 
 const Firestore = FirebaseAdmin.firestore();
+const Database = FirebaseAdmin.database();
 
 module.exports = {
     FirebaseAdmin,
-    Firestore
+    Firestore,
+    Database
 };

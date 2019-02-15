@@ -1,6 +1,7 @@
 package jmt.com.myapplication.adapters;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -16,6 +17,7 @@ import com.google.firebase.auth.FirebaseUser;
 import java.util.List;
 
 import jmt.com.myapplication.R;
+import jmt.com.myapplication.helpers.AutoColor;
 import jmt.com.myapplication.helpers.SetImageFromURL;
 import jmt.com.myapplication.models.Message;
 
@@ -25,10 +27,12 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
     private static final int MSG_TYPE_RIGHT = 1;
     private Context context;
     private List<Message> messages;
+    private String mainColor;
 
-    public MessageAdapter(Context context, List<Message> messages) {
+    public MessageAdapter(Context context, List<Message> messages, String mainColor) {
         this.context = context;
         this.messages = messages;
+        this.mainColor = mainColor;
     }
 
     @NonNull
@@ -36,6 +40,9 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
         if (viewType == MSG_TYPE_RIGHT) {
             View view = LayoutInflater.from(context).inflate(R.layout.chat_item_right, viewGroup, false);
+            // set background color for own's user message
+            TextView contentMessage = view.findViewById(R.id.showMessage);
+            contentMessage.getBackground().setTint(AutoColor.COLOR(mainColor).Light());
             return new MessageAdapter.ViewHolder(view);
         } else {
             View view = LayoutInflater.from(context).inflate(R.layout.chat_item_left, viewGroup, false);
@@ -48,6 +55,9 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
         Message message = messages.get(i);
 
         viewHolder.showMessage.setText(message.getContent());
+        if (viewHolder.displayName != null)
+            viewHolder.displayName.setText(message.getSender().getDisplayName());
+
         new SetImageFromURL(message.getSender().getPhotoURL(), message.getSender().getProviderId())
                 .setImage(viewHolder.profile_image);
     }
@@ -68,12 +78,14 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
     // view holder of user item
     class ViewHolder extends RecyclerView.ViewHolder {
         TextView showMessage;
+        TextView displayName;
         ImageView profile_image;
 
         ViewHolder(View view) {
             super(view);
 
             showMessage = view.findViewById(R.id.showMessage);
+            displayName = view.findViewById(R.id.displayName);
             profile_image = view.findViewById(R.id.profile_image);
         }
     }

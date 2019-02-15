@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -26,13 +27,18 @@ import java.util.List;
 import de.hdodenhof.circleimageview.CircleImageView;
 import jmt.com.myapplication.R;
 import jmt.com.myapplication.adapters.MessageAdapter;
+import jmt.com.myapplication.helpers.AutoColor;
 import jmt.com.myapplication.helpers.Helper;
+import jmt.com.myapplication.helpers.SetImageFromURL;
 import jmt.com.myapplication.models.Message;
 
 public class MessageActivity extends AppCompatActivity {
 
     private final static String TEXT = "TEXT";
+
     private String currentGroupId;
+    private String mainColor;
+
     CircleImageView profile_image;
     TextView groupName;
     ImageButton btn_send;
@@ -52,19 +58,6 @@ public class MessageActivity extends AppCompatActivity {
         setContentView(R.layout.activity_message);
         setup();
 
-        btn_send = findViewById(R.id.btn_send);
-        text_send = findViewById(R.id.text_send);
-        btn_send.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String msg = text_send.getText().toString();
-                if (!msg.equals("")) {
-                    sendMessage(msg, TEXT);
-                    text_send.setText("");
-                }
-            }
-        });
-
         readMessage();
     }
 
@@ -74,7 +67,23 @@ public class MessageActivity extends AppCompatActivity {
         return true;
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_settings) {
+            Intent intent = new Intent(this, DetailsGroupActivity.class);
+            intent.putExtra("groupId", currentGroupId);
+            intent.putExtra("mainColor", mainColor);
+            startActivity(intent);
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
     private void setup() {
+        // set toolbar (back button)
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("");
@@ -86,20 +95,46 @@ public class MessageActivity extends AppCompatActivity {
             }
         });
 
+        // settings for group message
+        intent = getIntent();
+        String displayName = intent.getStringExtra("displayName");
+        String imageURL = intent.getStringExtra("imageURL");
+        currentGroupId = intent.getStringExtra("id");
+        mainColor = intent.getStringExtra("mainColor");
+
         profile_image = findViewById(R.id.groupImage);
         groupName = findViewById(R.id.groupName);
+        btn_send = findViewById(R.id.btn_send);
+        text_send = findViewById(R.id.text_send);
 
-        intent = getIntent();
+        btn_send.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String msg = text_send.getText().toString();
+                if (!msg.equals("")) {
+                    sendMessage(msg, TEXT);
+                    text_send.setText("");
+                }
+            }
+        });
 
-        currentGroupId = intent.getStringExtra("id");
+        // set toolbar color follow main color group
+        Helper.setColorToolAndStatusBar(toolbar, getWindow(), mainColor);
 
-        groupName.setText(intent.getStringExtra("displayName"));
-        profile_image.setImageResource(R.mipmap.ic_launcher);
+        // set color for send button
+        btn_send.getBackground().setTint(AutoColor.COLOR(mainColor).Dark());
+
+        // set display name in toolbar
+        groupName.setText(displayName);
+        // set image in toolbar
+        if (imageURL.equals("DEFAULT"))
+            profile_image.setImageResource(R.mipmap.ic_launcher);
+        else
+            new SetImageFromURL(imageURL, "").setImage(profile_image);
     }
 
     private void sendMessage(String content, String type) {
         databaseReference = FirebaseDatabase.getInstance().getReference("messages");
-
         String idMessage = databaseReference.push().getKey();
 
         Message message = new Message();
@@ -126,7 +161,7 @@ public class MessageActivity extends AppCompatActivity {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     Message message = snapshot.getValue(Message.class);
                     messageList.add(message);
-                    messageAdapter = new MessageAdapter(MessageActivity.this, messageList);
+                    messageAdapter = new MessageAdapter(MessageActivity.this, messageList, mainColor);
                     recyclerView.setAdapter(messageAdapter);
                 }
                 View process_bar = findViewById(R.id.progress_bar);

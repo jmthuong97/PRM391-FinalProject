@@ -14,6 +14,7 @@ import java.util.List;
 
 import jmt.com.myapplication.R;
 import jmt.com.myapplication.activity.MessageActivity;
+import jmt.com.myapplication.helpers.SetImageFromURL;
 import jmt.com.myapplication.models.Group;
 
 public class GroupAdapter extends RecyclerView.Adapter<GroupAdapter.ViewHolder> {
@@ -38,13 +39,20 @@ public class GroupAdapter extends RecyclerView.Adapter<GroupAdapter.ViewHolder> 
 
         viewHolder.groupName.setText(group.getDisplayName());
         viewHolder.description.setText(group.getDescription());
-        viewHolder.groupImage.setImageResource(R.mipmap.ic_launcher); // here
+
+        if (group.getImageURL().equals("DEFAULT")) // check if group image is default (user don't upload image)
+            viewHolder.groupImage.setImageResource(R.mipmap.ic_launcher);
+        else
+            new SetImageFromURL(group.getImageURL(), "").setImage(viewHolder.groupImage);
+
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, MessageActivity.class);
-                intent.putExtra("displayName", group.getDisplayName());
                 intent.putExtra("id", group.getId());
+                intent.putExtra("displayName", group.getDisplayName());
+                intent.putExtra("mainColor", group.getMainColor());
+                intent.putExtra("imageURL", group.getImageURL());
                 context.startActivity(intent);
             }
         });

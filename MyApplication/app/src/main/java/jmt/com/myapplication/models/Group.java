@@ -7,22 +7,16 @@ public class Group {
     private String displayName;
     private String description;
     private String mainColor;
+    private String imageURL;
     private Boolean status;
     private List<String> members;
 
-    public Group(String id, String displayName, String description, String mainColor, Boolean status, List<String> members) {
+    public Group(String id, String displayName, String description, String mainColor, String imageURL, Boolean status, List<String> members) {
         this.id = id;
         this.displayName = displayName;
         this.description = description;
         this.mainColor = mainColor;
-        this.status = status;
-        this.members = members;
-    }
-
-    public Group(String displayName, String description, String mainColor, Boolean status, List<String> members) {
-        this.displayName = displayName;
-        this.description = description;
-        this.mainColor = mainColor;
+        this.imageURL = imageURL;
         this.status = status;
         this.members = members;
     }
@@ -60,6 +54,14 @@ public class Group {
 
     public void setMainColor(String mainColor) {
         this.mainColor = mainColor;
+    }
+
+    public String getImageURL() {
+        return imageURL;
+    }
+
+    public void setImageURL(String imageURL) {
+        this.imageURL = imageURL;
     }
 
     public List<String> getMembers() {

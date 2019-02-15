@@ -34,6 +34,14 @@
         </android.support.v7.widget.Toolbar>
     </android.support.design.widget.AppBarLayout>
 
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/bottom"
+        android:layout_below="@id/bar_layout"
+        android:background="#fff" />
+
     <include
         android:id="@+id/progress_bar"
         layout="@layout/progressbar"
@@ -41,14 +49,6 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/bar_layout"
         android:layout_centerHorizontal="true" />
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recycler_view"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#fff"
-        android:layout_above="@id/bottom"
-        android:layout_below="@id/bar_layout" />
 
     <RelativeLayout
         android:id="@+id/bottom"

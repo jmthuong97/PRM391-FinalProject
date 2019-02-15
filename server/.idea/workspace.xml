@@ -5,32 +5,30 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5414058c-d513-4909-bc3a-7264701373d9" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/../MyApplication/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../MyApplication/app/src/main/res/drawable/border.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MyApplication/app/src/main/java/jmt/com/myapplication/activity/DetailsGroupActivity.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MyApplication/app/src/main/java/jmt/com/myapplication/fragments/AddGroupFragment.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MyApplication/app/src/main/java/jmt/com/myapplication/helpers/AutoColor.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MyApplication/app/src/main/res/drawable-xxhdpi/qr_scan.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MyApplication/app/src/main/res/drawable/ic_close.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MyApplication/app/src/main/res/layout/activity_details_group.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MyApplication/app/src/main/res/layout/fragment_add_group.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../MyApplication/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/../MyApplication/app/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../MyApplication/app/src/androidTest/java/jmt/com/myapplication/ExampleInstrumentedTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/../MyApplication/app/src/androidTest/java/jmt/com/myapplication/ExampleInstrumentedTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../MyApplication/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../MyApplication/app/src/main/AndroidManifest.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../MyApplication/app/src/main/java/jmt/com/myapplication/activity/HomeActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../MyApplication/app/src/main/java/jmt/com/myapplication/activity/HomeActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../MyApplication/app/src/main/java/jmt/com/myapplication/activity/LoginActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../MyApplication/app/src/main/java/jmt/com/myapplication/activity/LoginActivity.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../MyApplication/app/src/main/java/jmt/com/myapplication/activity/MessageActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../MyApplication/app/src/main/java/jmt/com/myapplication/activity/MessageActivity.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../MyApplication/app/src/main/java/jmt/com/myapplication/adapters/GroupAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/../MyApplication/app/src/main/java/jmt/com/myapplication/adapters/GroupAdapter.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../MyApplication/app/src/main/java/jmt/com/myapplication/adapters/MessageAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/../MyApplication/app/src/main/java/jmt/com/myapplication/adapters/MessageAdapter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MyApplication/app/src/main/java/jmt/com/myapplication/fragments/GroupsFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/../MyApplication/app/src/main/java/jmt/com/myapplication/fragments/GroupsFragment.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../MyApplication/app/src/main/java/jmt/com/myapplication/helpers/Helper.java" beforeDir="false" afterPath="$PROJECT_DIR$/../MyApplication/app/src/main/java/jmt/com/myapplication/helpers/Helper.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../MyApplication/app/src/main/java/jmt/com/myapplication/helpers/SetImageFromURL.java" beforeDir="false" afterPath="$PROJECT_DIR$/../MyApplication/app/src/main/java/jmt/com/myapplication/helpers/SetImageFromURL.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../MyApplication/app/src/main/java/jmt/com/myapplication/models/Message.java" beforeDir="false" afterPath="$PROJECT_DIR$/../MyApplication/app/src/main/java/jmt/com/myapplication/models/Message.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../MyApplication/app/src/main/res/drawable-mdpi/background_left.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../MyApplication/app/src/main/res/drawable-mdpi/background_left.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../MyApplication/app/src/main/res/drawable/login_background.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../MyApplication/app/src/main/res/layout/activity_login.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../MyApplication/app/src/main/res/layout/activity_login.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MyApplication/app/src/main/java/jmt/com/myapplication/models/Group.java" beforeDir="false" afterPath="$PROJECT_DIR$/../MyApplication/app/src/main/java/jmt/com/myapplication/models/Group.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MyApplication/app/src/main/res/layout/activity_home.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../MyApplication/app/src/main/res/layout/activity_home.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../MyApplication/app/src/main/res/layout/activity_message.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../MyApplication/app/src/main/res/layout/activity_message.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../MyApplication/app/src/main/res/layout/chat_item_left.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../MyApplication/app/src/main/res/layout/chat_item_left.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../MyApplication/app/src/main/res/layout/chat_item_right.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../MyApplication/app/src/main/res/layout/chat_item_right.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MyApplication/app/src/main/res/layout/fragment_groups.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../MyApplication/app/src/main/res/layout/fragment_groups.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../MyApplication/app/src/main/res/layout/nav_header_home.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../MyApplication/app/src/main/res/layout/nav_header_home.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../MyApplication/app/src/main/res/menu/activity_home_drawer.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../MyApplication/app/src/main/res/menu/activity_home_drawer.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../MyApplication/app/src/main/res/values/strings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../MyApplication/app/src/main/res/values/strings.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../MyApplication/app/src/test/java/jmt/com/myapplication/ExampleUnitTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/../MyApplication/app/src/test/java/jmt/com/myapplication/ExampleUnitTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../MyApplication/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/../MyApplication/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../MyApplication/gradle.properties" beforeDir="false" afterPath="$PROJECT_DIR$/../MyApplication/gradle.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/functions/helpers/firebaseApp.js" beforeDir="false" afterPath="$PROJECT_DIR$/functions/helpers/firebaseApp.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/functions/triggers/AuthTrigger.js" beforeDir="false" afterPath="$PROJECT_DIR$/functions/triggers/AuthTrigger.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/functions/node_modules/" />
@@ -49,16 +47,16 @@
         <entry file="file://$PROJECT_DIR$/functions/helpers/Express.js">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="180">
-              <caret line="12" column="56" lean-forward="true" selection-start-line="12" selection-start-column="56" selection-end-line="12" selection-end-column="56" />
+              <caret line="12" column="56" selection-start-line="12" selection-start-column="56" selection-end-line="12" selection-end-column="56" />
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/functions/triggers/AuthTrigger.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="255">
-              <caret line="17" lean-forward="true" selection-start-line="17" selection-end-line="17" />
+            <state relative-caret-position="225">
+              <caret line="15" column="6" lean-forward="true" selection-start-line="15" selection-start-column="6" selection-end-line="15" selection-end-column="6" />
             </state>
           </provider>
         </entry>
@@ -75,16 +73,16 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/functions/controllers/groupController.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="277">
-              <caret line="20" column="16" selection-start-line="20" selection-start-column="16" selection-end-line="20" selection-end-column="16" />
+            <state relative-caret-position="256">
+              <caret line="23" column="12" selection-start-line="23" selection-start-column="12" selection-end-line="23" selection-end-column="12" />
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/.gitignore">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="262">
+            <state relative-caret-position="561">
               <caret line="47" column="23" selection-start-line="47" selection-start-column="23" selection-end-line="47" selection-end-column="23" />
             </state>
           </provider>
@@ -120,8 +118,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/functions/helpers/firebaseApp.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="240">
-              <caret line="16" column="2" selection-start-line="16" selection-start-column="2" selection-end-line="16" selection-end-column="2" />
+            <state relative-caret-position="255">
+              <caret line="17" column="12" selection-start-line="17" selection-start-column="12" selection-end-line="17" selection-end-column="12" />
             </state>
           </provider>
         </entry>
@@ -144,7 +142,6 @@
         <option value="$PROJECT_DIR$/.firebaserc" />
         <option value="$PROJECT_DIR$/functions/package.json" />
         <option value="$PROJECT_DIR$/functions/trickgers/AuthTrickger.js" />
-        <option value="$PROJECT_DIR$/functions/helpers/firebaseApp.js" />
         <option value="$PROJECT_DIR$/functions/routes/userRoute.js" />
         <option value="$PROJECT_DIR$/functions/routes/groupRoute.js" />
         <option value="$PROJECT_DIR$/functions/index.js" />
@@ -153,6 +150,7 @@
         <option value="$PROJECT_DIR$/functions/controllers/userController.js" />
         <option value="$PROJECT_DIR$/functions/controllers/groupController.js" />
         <option value="$PROJECT_DIR$/.gitignore" />
+        <option value="$PROJECT_DIR$/functions/helpers/firebaseApp.js" />
         <option value="$PROJECT_DIR$/functions/triggers/AuthTrigger.js" />
       </list>
     </option>
@@ -167,6 +165,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -189,7 +188,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -239,14 +237,19 @@
       <workItem from="1549955064548" duration="1000" />
       <workItem from="1550040089943" duration="470000" />
       <workItem from="1550049847258" duration="1317000" />
+      <workItem from="1550216828473" duration="26000" />
+      <workItem from="1550218819035" duration="267000" />
+      <workItem from="1550237067822" duration="25000" />
+      <workItem from="1550237190684" duration="996000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="31387000" />
+    <option name="totallyTimeSpent" value="32701000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1440" height="900" extended-state="0" />
+    <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.24947146" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -322,6 +325,13 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/functions/helpers/Express.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="180">
+          <caret line="12" column="56" selection-start-line="12" selection-start-column="56" selection-end-line="12" selection-end-column="56" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/functions/index.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="120">
@@ -350,38 +360,31 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/functions/helpers/firebaseApp.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="240">
-          <caret line="16" column="2" selection-start-line="16" selection-start-column="2" selection-end-line="16" selection-end-column="2" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/.gitignore">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="262">
-          <caret line="47" column="23" selection-start-line="47" selection-start-column="23" selection-end-line="47" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/functions/controllers/groupController.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="277">
-          <caret line="20" column="16" selection-start-line="20" selection-start-column="16" selection-end-line="20" selection-end-column="16" />
+        <state relative-caret-position="256">
+          <caret line="23" column="12" selection-start-line="23" selection-start-column="12" selection-end-line="23" selection-end-column="12" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/functions/helpers/Express.js">
+    <entry file="file://$PROJECT_DIR$/functions/helpers/firebaseApp.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="12" column="56" lean-forward="true" selection-start-line="12" selection-start-column="56" selection-end-line="12" selection-end-column="56" />
+        <state relative-caret-position="255">
+          <caret line="17" column="12" selection-start-line="17" selection-start-column="12" selection-end-line="17" selection-end-column="12" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/functions/triggers/AuthTrigger.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="17" lean-forward="true" selection-start-line="17" selection-end-line="17" />
+        <state relative-caret-position="225">
+          <caret line="15" column="6" lean-forward="true" selection-start-line="15" selection-start-column="6" selection-end-line="15" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="561">
+          <caret line="47" column="23" selection-start-line="47" selection-start-column="23" selection-end-line="47" selection-end-column="23" />
         </state>
       </provider>
     </entry>
