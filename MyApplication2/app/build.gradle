@@ -1,0 +1,69 @@
+apply plugin: 'com.android.application'
+apply plugin: 'com.google.gms.google-services'
+
+// **************************************** //
+def FACEBOOK_APP_ID = '"' + FacebookAppId + '"' ?: '"Define Facebook App Id"'
+def FBLOGINPROTOCOLSCHEME = '"' + FBLoginProtocolScheme + '"' ?: '"Define Faceebook Login Protocol Scheme"'
+def QRSECRETKEY = '"' + QRSecretKey + '"' ?: "Define QR Secret key"
+// **************************************** //
+
+android {
+    compileSdkVersion 28
+    defaultConfig {
+        applicationId "jmt.com.myapplication"
+        minSdkVersion 26
+        targetSdkVersion 28
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        // **************************************** //
+        each {
+            type ->
+                type.resValue "string", "facebook_app_id", FACEBOOK_APP_ID
+                type.resValue "string", "fb_login_protocol_scheme", FBLOGINPROTOCOLSCHEME
+                type.buildConfigField "String", "QRSecretKey", QRSECRETKEY
+        }
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation 'com.android.support:appcompat-v7:28.0.0'
+    implementation 'com.android.support.constraint:constraint-layout:1.1.3'
+    implementation 'com.android.support:support-v4:28.0.0'
+
+    // ==> import dependencies here <==
+    // FirebaseUI for Firebase Auth
+    implementation 'com.firebaseui:firebase-ui-auth:4.3.1'
+
+    // Required only if Facebook login support is required
+    // Find the latest Facebook SDK releases here: https://goo.gl/Ce5L94
+    implementation 'com.facebook.android:facebook-android-sdk:4.40.0'
+
+    // FirebaseUI for Firebase Realtime Database
+    implementation 'com.firebaseui:firebase-ui-database:4.3.1'
+
+    // FirebaseUI for Cloud Storage
+    implementation 'com.firebaseui:firebase-ui-storage:4.3.1'
+
+    // load image from url
+    implementation 'jp.wasabeef:picasso-transformations:2.2.1'
+
+    // create circle image view
+    implementation 'de.hdodenhof:circleimageview:3.0.0'
+
+    // QR code
+    implementation 'com.journeyapps:zxing-android-embedded:3.6.0'
+    // ==> ------------------------ <==
+
+    implementation 'com.android.support:design:28.0.0'
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'com.android.support.test:runner:1.0.2'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+}
