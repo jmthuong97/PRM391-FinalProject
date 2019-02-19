@@ -28,7 +28,7 @@ app.disable('etag');
 const braintreeRoute = require('./routes/braintreeRoute');
 
 app.get('/', (req, res) => {
-    res.send('Welcome to Chat Application API !');
+    res.json('Welcome to Chat Application API !');
 });
 
 app.use('/paypal', braintreeRoute);
