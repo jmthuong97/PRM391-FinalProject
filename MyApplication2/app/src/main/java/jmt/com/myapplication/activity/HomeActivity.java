@@ -25,6 +25,7 @@ import com.google.android.gms.tasks.Task;
 
 
 import jmt.com.myapplication.R;
+import jmt.com.myapplication.fragments.DonateFragment;
 import jmt.com.myapplication.fragments.GroupsFragment;
 import jmt.com.myapplication.helpers.Helper;
 import jmt.com.myapplication.models.User;
@@ -113,9 +114,6 @@ public class HomeActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
-
-        if (id == R.id.logout) logout();
-
         displaySelectedScreen(id);
         return true;
     }
@@ -126,6 +124,14 @@ public class HomeActivity extends AppCompatActivity
         switch (id) {
             case R.id.nav_message:
                 fragment = new GroupsFragment();
+                setTitle("Message");
+                break;
+            case R.id.donateBtn:
+                setTitle("Donate");
+                fragment = new DonateFragment();
+                break;
+            case R.id.logoutBtn:
+                logout();
                 break;
         }
 

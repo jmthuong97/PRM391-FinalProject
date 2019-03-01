@@ -34,7 +34,8 @@ import jmt.com.myapplication.models.Group;
 import jmt.com.myapplication.models.User;
 
 public class GroupsFragment extends Fragment {
-    DatabaseReference databaseReference;
+    private DatabaseReference databaseReference;
+    private ValueEventListener readDataGroup;
 
     public View rootView;
     private RecyclerView recyclerView;
@@ -79,6 +80,12 @@ public class GroupsFragment extends Fragment {
 
         getDataGroups();
         return rootView;
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        databaseReference.removeEventListener(readDataGroup);
     }
 
     @Override
@@ -144,7 +151,7 @@ public class GroupsFragment extends Fragment {
     // get list group of current user
     private void getDataGroups() {
         final User currentUser = Helper.getCurrentUser();
-        databaseReference.addValueEventListener(new ValueEventListener() {
+        readDataGroup = new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 groupList.clear();
@@ -164,6 +171,7 @@ public class GroupsFragment extends Fragment {
             public void onCancelled(@NonNull DatabaseError databaseError) {
                 Helper.makeToastMessage("No groups were found !", getContext());
             }
-        });
+        };
+        databaseReference.addValueEventListener(readDataGroup);
     }
 }

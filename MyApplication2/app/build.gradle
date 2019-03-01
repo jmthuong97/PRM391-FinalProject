@@ -5,6 +5,7 @@ apply plugin: 'com.google.gms.google-services'
 def FACEBOOK_APP_ID = '"' + FacebookAppId + '"' ?: '"Define Facebook App Id"'
 def FBLOGINPROTOCOLSCHEME = '"' + FBLoginProtocolScheme + '"' ?: '"Define Faceebook Login Protocol Scheme"'
 def QRSECRETKEY = '"' + QRSecretKey + '"' ?: "Define QR Secret key"
+def PAYPAL_CLIENT_ID = '"' + PaypalClientId + '"' ?: "Define paypal client id"
 // **************************************** //
 
 android {
@@ -22,6 +23,7 @@ android {
                 type.resValue "string", "facebook_app_id", FACEBOOK_APP_ID
                 type.resValue "string", "fb_login_protocol_scheme", FBLOGINPROTOCOLSCHEME
                 type.buildConfigField "String", "QRSecretKey", QRSECRETKEY
+                type.buildConfigField "String", "PaypalClientId", PAYPAL_CLIENT_ID
         }
     }
     buildTypes {
@@ -60,6 +62,9 @@ dependencies {
 
     // QR code
     implementation 'com.journeyapps:zxing-android-embedded:3.6.0'
+
+    // Paypal
+    implementation 'com.paypal.sdk:paypal-android-sdk:2.16.0'
     // ==> ------------------------ <==
 
     implementation 'com.android.support:design:28.0.0'

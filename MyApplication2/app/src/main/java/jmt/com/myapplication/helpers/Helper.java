@@ -8,14 +8,19 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.provider.OpenableColumns;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Window;
 import android.webkit.MimeTypeMap;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.GetTokenResult;
 import com.squareup.picasso.Picasso;
 
 import java.io.ByteArrayOutputStream;
@@ -36,6 +41,15 @@ public class Helper {
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
         User user = null;
         if (currentUser != null) {
+            currentUser.getIdToken(true)
+                    .addOnCompleteListener(new OnCompleteListener<GetTokenResult>() {
+                        public void onComplete(@NonNull Task<GetTokenResult> task) {
+                            if (task.isSuccessful()) {
+                                Log.d("ACCESS_TOKEN", task.getResult().getToken());
+                            }
+                        }
+                    });
+
             user = new User();
             String email = currentUser.getProviderData().get(0).getEmail();
             user.setDisplayName(currentUser.getDisplayName());

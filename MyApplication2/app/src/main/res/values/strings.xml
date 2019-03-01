@@ -10,4 +10,7 @@
 
     <string name="facebook_application_id" translatable="false">1018625581681284</string>
     <string name="facebook_login_protocol_scheme" translatable="false">fb1018625581681284</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

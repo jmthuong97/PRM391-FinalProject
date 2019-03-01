@@ -10,6 +10,9 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.Html;
+import android.text.SpannableString;
+import android.text.style.UnderlineSpan;
 import android.text.util.Linkify;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -276,31 +279,7 @@ public class MessageActivity extends AppCompatActivity {
         mAdapter = new FirebaseRecyclerAdapter<Message, MessageViewHolder>(options) {
             @Override
             protected void onBindViewHolder(@NonNull MessageViewHolder viewHolder, int position, @NonNull Message message) {
-                viewHolder.imageMessage.setImageDrawable(null);
-                viewHolder.profile_image.setImageDrawable(null);
-
-                if (viewHolder.displayName != null)
-                    viewHolder.displayName.setText(message.getSender().getDisplayName());
-                viewHolder.profile_image.setImageDrawable(null);
-                Helper.setAvatar(MessageActivity.this,
-                        message.getSender().getPhotoURL(),
-                        message.getSender().getProviderId(),
-                        viewHolder.profile_image);
-
-                switch (message.getType()) {
-                    case Message.TEXT:
-                        viewHolder.textMessage.setText(message.getContent());
-                        break;
-                    case Message.IMAGE:
-                        Helper.setImageRoundCorner(MessageActivity.this, message.getContent(), viewHolder.imageMessage);
-                        break;
-                    case Message.FILE:
-                        String text = message.getFileURL() + System.getProperty("line.separator") + message.getContent();
-                        viewHolder.textMessage.setText(text);
-                        Linkify.addLinks(viewHolder.textMessage, Linkify.WEB_URLS);
-                        break;
-                }
-
+                setContentMessage(viewHolder, message);
             }
 
             @Override
@@ -337,5 +316,44 @@ public class MessageActivity extends AppCompatActivity {
 
         mAdapter.startListening();
         recyclerView.setAdapter(mAdapter);
+    }
+
+    private void setContentMessage(MessageViewHolder viewHolder, Message message) {
+        viewHolder.textMessage.setOnClickListener(null);
+        viewHolder.textMessage.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
+        viewHolder.imageMessage.setImageDrawable(null);
+        viewHolder.profile_image.setImageDrawable(null);
+
+        if (viewHolder.displayName != null)
+            viewHolder.displayName.setText(message.getSender().getDisplayName());
+        viewHolder.profile_image.setImageDrawable(null);
+        Helper.setAvatar(MessageActivity.this,
+                message.getSender().getPhotoURL(),
+                message.getSender().getProviderId(),
+                viewHolder.profile_image);
+
+        switch (message.getType()) {
+            case Message.TEXT:
+                viewHolder.textMessage.setText(message.getContent());
+                break;
+            case Message.IMAGE:
+                Helper.setImageRoundCorner(MessageActivity.this, message.getContent(), viewHolder.imageMessage);
+                break;
+            case Message.FILE:
+                final String link = message.getContent();
+                SpannableString content = new SpannableString(message.getFileURL());
+                content.setSpan(new UnderlineSpan(), 0, message.getFileURL().length(), 0);
+                viewHolder.textMessage.setText(content);
+                viewHolder.textMessage.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_cloud_download_black_24dp, 0, 0, 0);
+                viewHolder.textMessage.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(Intent.ACTION_VIEW);
+                        intent.setData(Uri.parse(link));
+                        startActivity(intent);
+                    }
+                });
+                break;
+        }
     }
 }

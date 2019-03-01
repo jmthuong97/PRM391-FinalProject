@@ -31,6 +31,8 @@ public class DetailsGroupActivity extends AppCompatActivity {
             }
         });
 
+        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
+
         ImageView qr_code = findViewById(R.id.qr_code);
 
         String groupId = getIntent().getStringExtra("groupId");

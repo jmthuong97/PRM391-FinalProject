@@ -18,7 +18,10 @@
         <item android:title="Settings">
             <menu>
                 <item
-                    android:id="@+id/logout"
+                    android:id="@+id/donateBtn"
+                    android:title="Donate" />
+                <item
+                    android:id="@+id/logoutBtn"
                     android:title="Logout" />
             </menu>
         </item>
