@@ -15,7 +15,7 @@
       },
       "oauth_client": [
         {
-          "client_id": "345185909456-fcej4chf0n1osiger4gbsrgcmlri70a3.apps.googleusercontent.com",
+          "client_id": "345185909456-mca652l6iolhnhr5q9ma2q81k9dn7lbg.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "jmt.com.myapplication",
@@ -23,13 +23,13 @@
           }
         },
         {
-          "client_id": "345185909456-oosi4vr959gt4i3k0q0vmlm2ki242j1f.apps.googleusercontent.com",
+          "client_id": "345185909456-vbhrp1kd1rboutag41j8urjb80647ekg.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyASfz45QRFkuiia9SR-tcX5AnK3e_ny_po"
+          "current_key": "AIzaSyBxPjTW90bDcTcd3rlR4YU6Uzo4ts73jl0"
         }
       ],
       "services": {
@@ -40,7 +40,7 @@
           "status": 2,
           "other_platform_oauth_client": [
             {
-              "client_id": "345185909456-oosi4vr959gt4i3k0q0vmlm2ki242j1f.apps.googleusercontent.com",
+              "client_id": "345185909456-vbhrp1kd1rboutag41j8urjb80647ekg.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
