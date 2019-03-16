@@ -18,9 +18,10 @@ const authenticate = async (req, res, next) => {
     try {
         FirebaseAdmin.auth().verifyIdToken(idToken)
             .then(decodedToken => {
-                req.uid = decodedToken.uid;
+                console.log(decodedToken);
+                req.uid = decodedToken.user_id;
                 next();
-            });
+            }).catch(err => res.send(HttpResponse.badRequestError(err)));
     } catch (error) {
         res.send(HttpResponse.unauthorizedError(error));
     }
