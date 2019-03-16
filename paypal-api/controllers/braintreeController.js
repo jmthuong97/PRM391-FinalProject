@@ -16,12 +16,13 @@ module.exports = {
         const uid = req.user.uid;
         gateway.clientToken.generate({}, function (err, response) {
             if (err) res.send(HttpResponse.badRequestError(err));
-            res.send(HttpResponse.ok({clientToken: response.clientToken}))
+            res.send(HttpResponse.ok({
+                uid: uid,
+                clientToken: response.clientToken
+            }))
         });
     },
     executePayment: async (req, res) => {
-        const user = req.user;
-
         let message = {};
         // Get the nonce from the request body
         let nonce = req.body.nonce;
@@ -44,7 +45,7 @@ module.exports = {
         // Call the Braintree gateway to execute the payment
         gateway.transaction.sale(saleRequest, function (err, result) {
             if (err || !result.success) return res.send(HttpResponse.serverError(err));
-            userRef.child(user.uid).update({
+            userRef.child(req.user.uid).update({
                 premiumAccount: {
                     status: true
                 }
@@ -52,8 +53,8 @@ module.exports = {
                 // Return a success response to the client
                 return res.send(HttpResponse.ok({
                     id: result.transaction.id,
-                    userId: user.uid,
-                    user: user
+                    userId: req.user.uid,
+                    user: req.user
                 }));
             }).catch(err => res.send(HttpResponse.badRequestError(err)));
         });
