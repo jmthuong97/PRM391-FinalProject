@@ -2,18 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="28adccbd-2ee4-48e0-81c6-026bd19766bc" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/../MyApplication2/app/src/main/java/jmt/com/myapplication/fragments/BuyFragment.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../MyApplication2/app/src/main/java/jmt/com/myapplication/helpers/IAccessTokenCallback.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../MyApplication2/app/src/main/java/jmt/com/myapplication/helpers/IVolleyCallback.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../MyApplication2/app/src/main/java/jmt/com/myapplication/helpers/VolleyRequest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../MyApplication2/app/src/main/res/drawable-v24/ic_premium.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../MyApplication2/app/src/main/res/layout/fragment_buy.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../MyApplication2/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../MyApplication2/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../MyApplication2/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/../MyApplication2/app/build.gradle" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../MyApplication2/app/src/main/java/jmt/com/myapplication/activity/HomeActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../MyApplication2/app/src/main/java/jmt/com/myapplication/activity/HomeActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../MyApplication2/app/src/main/java/jmt/com/myapplication/fragments/DonateFragment.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MyApplication2/app/src/main/java/jmt/com/myapplication/fragments/BuyFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/../MyApplication2/app/src/main/java/jmt/com/myapplication/fragments/BuyFragment.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../MyApplication2/app/src/main/java/jmt/com/myapplication/helpers/Helper.java" beforeDir="false" afterPath="$PROJECT_DIR$/../MyApplication2/app/src/main/java/jmt/com/myapplication/helpers/Helper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../MyApplication2/app/src/main/res/layout/fragment_donate.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MyApplication2/app/src/main/java/jmt/com/myapplication/helpers/VolleyRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/../MyApplication2/app/src/main/java/jmt/com/myapplication/helpers/VolleyRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MyApplication2/app/src/main/res/layout/fragment_buy.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../MyApplication2/app/src/main/res/layout/fragment_buy.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../MyApplication2/app/src/main/res/layout/nav_header_home.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../MyApplication2/app/src/main/res/layout/nav_header_home.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../MyApplication2/app/src/main/res/menu/activity_home_drawer.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../MyApplication2/app/src/main/res/menu/activity_home_drawer.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../server/.firebaserc" beforeDir="false" />
@@ -184,18 +179,17 @@
       <workItem from="1550555164152" duration="2219000" />
       <workItem from="1551425407298" duration="621000" />
       <workItem from="1552631433010" duration="660000" />
-      <workItem from="1552731337310" duration="1186000" />
+      <workItem from="1552731337310" duration="1413000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="5842000" />
+    <option name="totallyTimeSpent" value="6069000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1440" height="900" extended-state="0" />
-    <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.24947146" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.24947146" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info id="npm" order="3" side_tool="true" />
@@ -208,7 +202,7 @@
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="8" weight="0.32891566" />
-      <window_info anchor="bottom" id="Terminal" order="9" visible="true" weight="0.32891566" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="9" visible="true" weight="0.32891566" />
       <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
