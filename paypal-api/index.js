@@ -30,6 +30,10 @@ const authenticate = async (req, res, next) => {
 app.use(authenticate);
 app.disable('etag');
 
+app.get('/test', (req, res) => {
+    res.send(req.uid);
+});
+
 app.use('/paypal', braintreeRoute);
 
 // Run server

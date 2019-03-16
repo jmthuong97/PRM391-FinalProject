@@ -3,6 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="28adccbd-2ee4-48e0-81c6-026bd19766bc" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/../MyApplication2/app/src/main/java/jmt/com/myapplication/fragments/BuyFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/../MyApplication2/app/src/main/java/jmt/com/myapplication/fragments/BuyFragment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MyApplication2/app/src/main/java/jmt/com/myapplication/helpers/Helper.java" beforeDir="false" afterPath="$PROJECT_DIR$/../MyApplication2/app/src/main/java/jmt/com/myapplication/helpers/Helper.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -18,8 +19,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/index.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="394">
-              <caret line="30" column="20" lean-forward="true" selection-start-line="30" selection-start-column="20" selection-end-line="30" selection-end-column="20" />
+            <state relative-caret-position="329">
+              <caret line="29" column="22" lean-forward="true" selection-start-line="29" selection-start-column="22" selection-end-line="29" selection-end-column="22" />
             </state>
           </provider>
         </entry>
@@ -164,12 +165,12 @@
       <workItem from="1550555164152" duration="2219000" />
       <workItem from="1551425407298" duration="621000" />
       <workItem from="1552631433010" duration="660000" />
-      <workItem from="1552731337310" duration="8877000" />
+      <workItem from="1552731337310" duration="9118000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="13533000" />
+    <option name="totallyTimeSpent" value="13774000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1440" height="900" extended-state="0" />
@@ -260,8 +261,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/index.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="394">
-          <caret line="30" column="20" lean-forward="true" selection-start-line="30" selection-start-column="20" selection-end-line="30" selection-end-column="20" />
+        <state relative-caret-position="329">
+          <caret line="29" column="22" lean-forward="true" selection-start-line="29" selection-start-column="22" selection-end-line="29" selection-end-column="22" />
         </state>
       </provider>
     </entry>
