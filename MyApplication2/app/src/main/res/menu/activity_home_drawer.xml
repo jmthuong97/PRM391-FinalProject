@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_message"
+            android:icon="@drawable/ic_menu_send"
+            android:title="Message" />
+        <item
+            android:id="@+id/nav_menu2"
+            android:icon="@drawable/ic_menu_send"
+            android:title="Menu 2" />
+    </group>
+
+    <group android:id="@+id/settings">
+        <item android:title="Settings">
+            <menu>
+                <item
+                    android:id="@+id/donateBtn"
+                    android:title="Premium Account" />
+                <item
+                    android:id="@+id/logoutBtn"
+                    android:title="Logout" />
+            </menu>
+        </item>
+    </group>
+</menu>
