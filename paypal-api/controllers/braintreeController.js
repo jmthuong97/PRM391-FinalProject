@@ -44,7 +44,7 @@ module.exports = {
         // Call the Braintree gateway to execute the payment
         gateway.transaction.sale(saleRequest, function (err, result) {
             if (err || !result.success) return res.send(HttpResponse.serverError(err));
-            userRef.child(uid).update({
+            userRef.child(uid).set({
                 premiumAccount: {
                     status: true,
                     transactionId: result.transaction.id
