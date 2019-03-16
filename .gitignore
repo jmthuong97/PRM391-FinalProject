@@ -1,2 +1,6 @@
 tmp
+<<<<<<< HEAD
 paypal-api/node_modules
+=======
+node_modules
+>>>>>>> 5609cde3a951a782714179dbeb0cf436ad4fc7cb

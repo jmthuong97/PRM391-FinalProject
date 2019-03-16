@@ -38,6 +38,7 @@ import static android.app.Activity.RESULT_OK;
 
 public class BuyFragment extends Fragment {
     public View rootView;
+
     private static final int REQUEST_CODE = 672;
     BraintreeFragment mBraintreeFragment;
 

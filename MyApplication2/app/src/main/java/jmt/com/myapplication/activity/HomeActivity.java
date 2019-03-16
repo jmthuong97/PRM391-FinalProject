@@ -110,7 +110,15 @@ public class HomeActivity extends AppCompatActivity
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            logout();
+            AuthUI.getInstance()
+                    .signOut(HomeActivity.this)
+                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                        public void onComplete(@NonNull Task<Void> task) {
+                            Helper.makeToastMessage("User Signed Out", HomeActivity.this);
+                            Intent intent = new Intent(HomeActivity.this, LoginActivity.class);
+                            HomeActivity.this.startActivity(intent);
+                        }
+                    });
             super.onBackPressed();
         }
     }
