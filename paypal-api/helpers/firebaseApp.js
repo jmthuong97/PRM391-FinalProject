@@ -7,6 +7,9 @@ const FirebaseAdmin = !admin.apps.length ?
         databaseURL: "https://chat-application-8c618.firebaseio.com"
     }) : admin.app();
 
+const Database = FirebaseAdmin.database();
+
 module.exports = {
     FirebaseAdmin,
+    Database
 };

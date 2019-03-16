@@ -1,6 +1,6 @@
 const braintree = require("braintree");
 const HttpResponse = require('../helpers/HttpResponse');
-const {FirebaseAdmin} = require('../helpers/firebaseApp');
+const {Database} = require('../helpers/firebaseApp');
 
 const gateway = braintree.connect({
     environment: braintree.Environment.Sandbox,
@@ -8,6 +8,8 @@ const gateway = braintree.connect({
     publicKey: "kw4wc556f7gghtd9",
     privateKey: "c2be22021ed107e21bbbf62ef06e984e"
 });
+
+const userRef = Database.ref('users');
 
 module.exports = {
     getClientToken: async (req, res) => {
@@ -42,8 +44,11 @@ module.exports = {
         // Call the Braintree gateway to execute the payment
         gateway.transaction.sale(saleRequest, function (err, result) {
             if (err || !result.success) return res.send(HttpResponse.serverError(err));
-            FirebaseAdmin.auth().setCustomUserClaims(uid, {
-                premiumAccount: true
+            userRef.child(uid).update({
+                premiumAccount: {
+                    status: true,
+                    transactionId: result.transaction.id
+                }
             }).then(() => {
                 // Return a success response to the client
                 return res.send(HttpResponse.ok({
