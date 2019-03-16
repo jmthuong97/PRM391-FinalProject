@@ -46,14 +46,14 @@ module.exports = {
             if (err || !result.success) return res.send(HttpResponse.serverError(err));
             userRef.child(user.uid).update({
                 premiumAccount: {
-                    status: true,
-                    transactionId: result.transaction.id
+                    status: true
                 }
             }).then((data) => {
                 // Return a success response to the client
                 return res.send(HttpResponse.ok({
                     id: result.transaction.id,
-                    data: user
+                    userId: user.uid,
+                    user: user
                 }));
             }).catch(err => res.send(HttpResponse.badRequestError(err)));
         });
