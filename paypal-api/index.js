@@ -2,6 +2,7 @@ const express = require('express'),
     bodyParser = require('body-parser');
 const {FirebaseAdmin} = require('./helpers/firebaseApp');
 const HttpResponse = require('./helpers/HttpResponse');
+const braintreeRoute = require('./routes/braintreeRoute');
 
 const app = express();
 
@@ -15,12 +16,8 @@ const authenticate = async (req, res, next) => {
     }
     const idToken = req.headers.authorization.split('Bearer ')[1];
     try {
-        let user = await FirebaseAdmin.auth().verifyIdToken(idToken);
-        if (user != null) {
-            req.user = user;
-            next();
-        } else res.send(HttpResponse.unauthorizedError("error"));
-
+        req.user = await FirebaseAdmin.auth().verifyIdToken(idToken);
+        next();
     } catch (error) {
         res.send(HttpResponse.unauthorizedError(error));
     }
@@ -28,12 +25,6 @@ const authenticate = async (req, res, next) => {
 
 app.use(authenticate);
 app.disable('etag');
-
-const braintreeRoute = require('./routes/braintreeRoute');
-
-app.get('/', (req, res) => {
-    res.send('Welcome to Chat Application API !');
-});
 
 app.use('/paypal', braintreeRoute);
 
