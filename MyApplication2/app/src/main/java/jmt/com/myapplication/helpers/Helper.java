@@ -10,6 +10,7 @@ import android.provider.MediaStore;
 import android.provider.OpenableColumns;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Window;
 import android.webkit.MimeTypeMap;
 import android.widget.ImageView;
@@ -42,6 +43,7 @@ public class Helper {
                     .addOnCompleteListener(new OnCompleteListener<GetTokenResult>() {
                         public void onComplete(@NonNull Task<GetTokenResult> task) {
                             if (task.isSuccessful()) {
+                                Log.d("ACCESS_TOKEN", task.getResult().getToken());
                                 iAccessTokenCallback.onSuccessGetAccessToken(task.getResult().getToken());
                             }
                         }

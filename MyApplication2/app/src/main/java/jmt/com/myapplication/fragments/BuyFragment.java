@@ -84,6 +84,7 @@ public class BuyFragment extends Fragment {
                     JSONObject data = result.getJSONObject("data");
                     clientToken = data.getString("clientToken");
                     Log.d("clientToken", clientToken);
+                    Log.d("/paypal/client-token/", data.getString("uid"));
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -118,6 +119,7 @@ public class BuyFragment extends Fragment {
         new VolleyRequest(getContext()).POST("/paypal/execute-payment", paramsURL, new IVolleyCallback() {
             @Override
             public void onSuccessResponse(JSONObject result) {
+                Log.d("DCMM", result.toString());
                 Toast.makeText(getContext(), result.toString(), Toast.LENGTH_SHORT).show();
             }
         });
