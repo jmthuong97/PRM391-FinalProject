@@ -20,7 +20,7 @@ module.exports = {
         });
     },
     executePayment: async (req, res) => {
-        const uid = req.user.uid;
+        const user = req.user;
 
         let message = {};
         // Get the nonce from the request body
@@ -44,20 +44,16 @@ module.exports = {
         // Call the Braintree gateway to execute the payment
         gateway.transaction.sale(saleRequest, function (err, result) {
             if (err || !result.success) return res.send(HttpResponse.serverError(err));
-            userRef.child(uid).once(data => {
-                console.log(data);
-            });
-            userRef.child(uid).set({
+            userRef.child(user.uid).update({
                 premiumAccount: {
                     status: true,
                     transactionId: result.transaction.id
                 }
             }).then((data) => {
-                console.log(data);
                 // Return a success response to the client
                 return res.send(HttpResponse.ok({
                     id: result.transaction.id,
-                    data: data
+                    data: user
                 }));
             }).catch(err => res.send(HttpResponse.badRequestError(err)));
         });
