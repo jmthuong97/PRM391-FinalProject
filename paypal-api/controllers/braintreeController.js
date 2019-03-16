@@ -9,7 +9,7 @@ const gateway = braintree.connect({
     privateKey: "c2be22021ed107e21bbbf62ef06e984e"
 });
 
-const ref = Database.ref("server/saving-data/fireblog");
+const userRef = Database.ref('users');
 
 module.exports = {
     getClientToken: async (req, res) => {
@@ -44,7 +44,7 @@ module.exports = {
         // Call the Braintree gateway to execute the payment
         gateway.transaction.sale(saleRequest, function (err, result) {
             if (err || !result.success) return res.send(HttpResponse.serverError(err));
-            ref.child(`users/${uid}`).update({
+            userRef.child(uid).update({
                 premiumAccount: {
                     status: true,
                     transactionId: result.transaction.id
