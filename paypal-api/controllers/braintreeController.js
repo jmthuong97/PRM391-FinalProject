@@ -49,10 +49,12 @@ module.exports = {
                     status: true,
                     transactionId: result.transaction.id
                 }
-            }).then(() => {
+            }).then((data) => {
+                console.log(data);
                 // Return a success response to the client
                 return res.send(HttpResponse.ok({
-                    id: result.transaction.id
+                    id: result.transaction.id,
+                    data: data
                 }));
             }).catch(err => res.send(HttpResponse.badRequestError(err)));
         });
