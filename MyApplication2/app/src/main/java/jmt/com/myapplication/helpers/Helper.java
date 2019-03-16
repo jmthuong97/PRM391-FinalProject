@@ -10,7 +10,6 @@ import android.provider.MediaStore;
 import android.provider.OpenableColumns;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Window;
 import android.webkit.MimeTypeMap;
 import android.widget.ImageView;
@@ -36,20 +35,25 @@ public class Helper {
     private static final String GOOGLE = "google.com";
     private static final String FACEBOOK = "facebook.com";
 
-    // get information of current user
-    public static User getCurrentUser() {
+    public static void getAccessToken(final IAccessTokenCallback iAccessTokenCallback) {
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
-        User user = null;
         if (currentUser != null) {
             currentUser.getIdToken(true)
                     .addOnCompleteListener(new OnCompleteListener<GetTokenResult>() {
                         public void onComplete(@NonNull Task<GetTokenResult> task) {
                             if (task.isSuccessful()) {
-                                Log.d("ACCESS_TOKEN", task.getResult().getToken());
+                                iAccessTokenCallback.onSuccessGetAccessToken(task.getResult().getToken());
                             }
                         }
                     });
+        }
+    }
 
+    // get information of current user
+    public static User getCurrentUser() {
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        User user = null;
+        if (currentUser != null) {
             user = new User();
             String email = currentUser.getProviderData().get(0).getEmail();
             user.setDisplayName(currentUser.getDisplayName());

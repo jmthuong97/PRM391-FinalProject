@@ -28,7 +28,7 @@ public class VolleyRequest {
     }
 
     public void GET(final String path, final Map<String, String> params, final IVolleyCallback callback) {
-        Helper.GetAccessToken(new IAccessTokenCallback() {
+        Helper.getAccessToken(new IAccessTokenCallback() {
             @Override
             public void onSuccessGetAccessToken(final String accessToken) {
                 JsonObjectRequest objectRequest = new JsonObjectRequest(
@@ -75,7 +75,7 @@ public class VolleyRequest {
     }
 
     public void POST(final String path, final JSONObject jsonBody, final IVolleyCallback callback) {
-        Helper.GetAccessToken(new IAccessTokenCallback() {
+        Helper.getAccessToken(new IAccessTokenCallback() {
             @Override
             public void onSuccessGetAccessToken(final String accessToken) {
                 JsonObjectRequest objectRequest = new JsonObjectRequest(
