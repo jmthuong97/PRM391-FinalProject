@@ -16,8 +16,11 @@ const authenticate = async (req, res, next) => {
     }
     const idToken = req.headers.authorization.split('Bearer ')[1];
     try {
-        req.user = await FirebaseAdmin.auth().verifyIdToken(idToken);
-        next();
+        FirebaseAdmin.auth().verifyIdToken(idToken)
+            .then(decodedToken => {
+                req.uid = decodedToken.uid;
+                next();
+            });
     } catch (error) {
         res.send(HttpResponse.unauthorizedError(error));
     }

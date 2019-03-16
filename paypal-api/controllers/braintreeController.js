@@ -13,7 +13,7 @@ const userRef = Database.ref('users');
 
 module.exports = {
     getClientToken: async (req, res) => {
-        const uid = req.user.uid;
+        const uid = req.uid;
         gateway.clientToken.generate({}, function (err, response) {
             if (err) res.send(HttpResponse.badRequestError(err));
             res.send(HttpResponse.ok({
@@ -45,7 +45,7 @@ module.exports = {
         // Call the Braintree gateway to execute the payment
         gateway.transaction.sale(saleRequest, function (err, result) {
             if (err || !result.success) return res.send(HttpResponse.serverError(err));
-            userRef.child(req.user.uid).update({
+            userRef.child(req.uid).update({
                 premiumAccount: {
                     status: true
                 }
@@ -53,8 +53,7 @@ module.exports = {
                 // Return a success response to the client
                 return res.send(HttpResponse.ok({
                     id: result.transaction.id,
-                    userId: req.user.uid,
-                    user: req.user
+                    userId: req.uid
                 }));
             }).catch(err => res.send(HttpResponse.badRequestError(err)));
         });
