@@ -12,6 +12,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.SpannableString;
 import android.text.style.UnderlineSpan;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -28,18 +29,26 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import de.hdodenhof.circleimageview.CircleImageView;
 import jmt.com.myapplication.R;
 import jmt.com.myapplication.helpers.AutoColor;
 import jmt.com.myapplication.helpers.Helper;
+import jmt.com.myapplication.models.Group;
 import jmt.com.myapplication.models.Message;
+import jmt.com.myapplication.models.UserToken;
 import jmt.com.myapplication.viewholders.MessageViewHolder;
 
 public class MessageActivity extends AppCompatActivity {
@@ -244,6 +253,8 @@ public class MessageActivity extends AppCompatActivity {
                             }
                         }
                     });
+            sendNoti("sent an attachment");
+
         }
 
     }
@@ -259,6 +270,65 @@ public class MessageActivity extends AppCompatActivity {
         message.setId(idMessage);
         message.setSender(Helper.getCurrentUser());
         databaseReference.child(currentGroupId).child(idMessage).setValue(message);
+        Log.d("testsend", "sending noti b4 void");
+        sendNoti(content);
+    }
+
+    public void sendNoti(final String contentNoti){
+        Log.d("testsend", "sending noti");
+
+        DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
+        DatabaseReference searchRef = rootRef.child("groups");
+        ValueEventListener valueEventListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                final List<String> listUser = new ArrayList<>();
+                for(DataSnapshot ds : dataSnapshot.getChildren()) {
+                    String groupID =  ds.getValue(Group.class).getId();
+                    Log.d("test send", "current groups:" +groupID);
+                    Log.d("test send", currentGroupId);
+
+                    if(groupID.equalsIgnoreCase(currentGroupId)){
+                        List<String> membersID = ds.getValue(Group.class).getMembers();
+                        Log.d("test send", "list of member from group:" +membersID.toString());
+
+                        for(int i = 0 ; i <membersID.size();i++){
+                            final String currentMem = membersID.get(i);
+                            Log.d("test send", "current member: " +currentMem);
+
+                            DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
+                            DatabaseReference searchRef = rootRef.child("userToken");
+                            ValueEventListener valueEventListener = new ValueEventListener() {
+                                @Override
+                                public void onDataChange(DataSnapshot dataSnapshot) {
+
+                                    for(DataSnapshot ds : dataSnapshot.getChildren()) {
+                                        String value =  ds.getValue(UserToken.class).getUid();
+                                        Log.d("test send", "user id in token tbl: " +value);
+
+                                        if(value.equalsIgnoreCase(currentMem)){
+                                            Log.d("test send", "found user id and sending to token:" +ds.getValue(UserToken.class).getToken());
+
+                                            Helper.sendNotification(ds.getValue(UserToken.class).getToken(),
+                                                    displayName,Helper.getCurrentUser().getDisplayName(),
+                                                    contentNoti);
+                                        }
+                                    }
+                                }
+                                @Override
+                                public void onCancelled(DatabaseError databaseError) {}
+                            };
+                            searchRef.addListenerForSingleValueEvent(valueEventListener);
+                        }
+                        break;
+                    }
+                }
+                Log.d("TAG", listUser.toString());
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {}
+        };
+        searchRef.addListenerForSingleValueEvent(valueEventListener);
     }
 
     private void readMessage() {
