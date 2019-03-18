@@ -86,20 +86,20 @@ public class HomeActivity extends AppCompatActivity
         receiver = new MessageReceiver();
         Intent intent = getIntent();
         Bundle bundle = RemoteInput.getResultsFromIntent(intent);
-        if(bundle != null){
+        if (bundle != null) {
             NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
             manager.cancel(NOTIFICATION_ID);
-            String msg= bundle.getString(KEY_TEXT_REPLY);
+            String msg = bundle.getString(KEY_TEXT_REPLY);
 
             Bundle bundleInc = intent.getExtras();
 
-            String displayName ="";
-            if(bundleInc!=null){
+            String displayName = "";
+            if (bundleInc != null) {
                 displayName = bundleInc.getString("title");
-                Log.d("bigboy", " big boi bundle got "+ bundleInc.getString("title") + bundle.getString("title"));
+                Log.d("bigboy", " big boi bundle got " + bundleInc.getString("title") + bundle.getString("title"));
             }
 
-            Helper.notiRep(msg,displayName);
+            Helper.notiRep(msg, displayName);
 
         }
     }
@@ -145,25 +145,6 @@ public class HomeActivity extends AppCompatActivity
                     }
                 })
                 .show();
-    }
-
-    @Override
-    public void onBackPressed() {
-        DrawerLayout drawer = findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-        } else {
-            AuthUI.getInstance()
-                    .signOut(HomeActivity.this)
-                    .addOnCompleteListener(new OnCompleteListener<Void>() {
-                        public void onComplete(@NonNull Task<Void> task) {
-                            Helper.makeToastMessage("User Signed Out", HomeActivity.this);
-                            Intent intent = new Intent(HomeActivity.this, LoginActivity.class);
-                            HomeActivity.this.startActivity(intent);
-                        }
-                    });
-            super.onBackPressed();
-        }
     }
 
     @Override
@@ -228,28 +209,30 @@ public class HomeActivity extends AppCompatActivity
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
     }
+
     public class MessageReceiver extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
             Bundle bundle = intent.getExtras();
-            String message="";
-            String title="";
-            if(bundle!=null){
+            String message = "";
+            String title = "";
+            if (bundle != null) {
                 message = bundle.getString("Message");
                 title = bundle.getString("Title");
             }
-            Log.d("bigboy", "bigboi received title" +title);
+            Log.d("bigboy", "bigboi received title" + title);
 
-            createNotification(message,title);
+            createNotification(message, title);
         }
     }
-    private void createNotification(String message,String title) {
+
+    private void createNotification(String message, String title) {
         Intent intent = new Intent(this, HomeActivity.class);
         Bundle bundle = new Bundle();
-        bundle.putString("title",title);
+        bundle.putString("title", title);
         intent.putExtras(bundle);
 
-        Log.d("bigboy", "big boi in bundle title " +title);
+        Log.d("bigboy", "big boi in bundle title " + title);
 
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0,
                 intent, PendingIntent.FLAG_UPDATE_CURRENT);

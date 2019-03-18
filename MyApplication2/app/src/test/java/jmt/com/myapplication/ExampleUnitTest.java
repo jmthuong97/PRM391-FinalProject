@@ -2,11 +2,11 @@ package jmt.com.myapplication;
 
 import org.junit.Test;
 
-<<<<<<< HEAD
 import static org.junit.Assert.assertEquals;
+
+<<<<<<<HEAD
 =======
-import static org.junit.Assert.*;
->>>>>>> 5609cde3a951a782714179dbeb0cf436ad4fc7cb
+>>>>>>>5609cde3a951a782714179dbeb0cf436ad4fc7cb
 
 /**
  * Example local unit test, which will execute on the development machine (host).

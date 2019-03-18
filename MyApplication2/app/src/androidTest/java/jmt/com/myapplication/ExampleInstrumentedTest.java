@@ -7,11 +7,11 @@ import android.support.test.runner.AndroidJUnit4;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-<<<<<<< HEAD
 import static org.junit.Assert.assertEquals;
+
+<<<<<<<HEAD
 =======
-import static org.junit.Assert.*;
->>>>>>> 5609cde3a951a782714179dbeb0cf436ad4fc7cb
+>>>>>>>5609cde3a951a782714179dbeb0cf436ad4fc7cb
 
 /**
  * Instrumented test, which will execute on an Android device.
