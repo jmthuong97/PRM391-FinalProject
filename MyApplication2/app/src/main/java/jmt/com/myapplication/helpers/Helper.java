@@ -52,6 +52,8 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
+import static jmt.com.myapplication.BuildConfig.LEGACY_SERVER_KEY;
+
 public class Helper {
     public static long MAXIMUM_FILE_SIZE = 5 * 1024 * 1024; // equal to 10Mb
     private static final String GOOGLE = "google.com";
@@ -76,7 +78,7 @@ public class Helper {
 
                     RequestBody body = RequestBody.create(JSON, json.toString());
                     Request request = new Request.Builder()
-                            .header("Authorization", "key=" + BuildConfig.LEGACY_SERVER_KEY)
+                            .header("Authorization", "key=" + LEGACY_SERVER_KEY)
                             .url("https://fcm.googleapis.com/fcm/send")
                             .post(body)
                             .build();
