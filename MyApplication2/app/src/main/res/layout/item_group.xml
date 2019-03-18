@@ -17,8 +17,8 @@
         android:layout_marginStart="10dp"
         android:layout_toEndOf="@id/groupImage"
         android:layout_toRightOf="@id/groupImage"
-        android:textSize="18sp"
         android:textColor="#000"
+        android:textSize="18sp"
         tools:ignore="RtlHardcoded" />
 
     <TextView
