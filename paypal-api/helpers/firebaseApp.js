@@ -1,6 +1,4 @@
 const admin = require('firebase-admin');
-require('firebase/firestore');
-require('firebase/firebase-functions');
 const serviceAccount = require("../configuration/serviceAccountKey.json");
 
 const FirebaseAdmin = !admin.apps.length ?
@@ -9,11 +7,9 @@ const FirebaseAdmin = !admin.apps.length ?
         databaseURL: "https://chat-application-8c618.firebaseio.com"
     }) : admin.app();
 
-const Firestore = FirebaseAdmin.firestore();
 const Database = FirebaseAdmin.database();
 
 module.exports = {
     FirebaseAdmin,
-    Firestore,
     Database
 };

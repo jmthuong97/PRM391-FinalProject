@@ -19,7 +19,7 @@
             <menu>
                 <item
                     android:id="@+id/donateBtn"
-                    android:title="Donate" />
+                    android:title="Premium Account" />
                 <item
                     android:id="@+id/logoutBtn"
                     android:title="Logout" />

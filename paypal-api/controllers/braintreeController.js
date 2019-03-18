@@ -1,6 +1,6 @@
-const functions = require('firebase-functions');
 const braintree = require("braintree");
 const HttpResponse = require('../helpers/HttpResponse');
+const {Database} = require('../helpers/firebaseApp');
 
 const gateway = braintree.connect({
     environment: braintree.Environment.Sandbox,
@@ -9,15 +9,22 @@ const gateway = braintree.connect({
     privateKey: "c2be22021ed107e21bbbf62ef06e984e"
 });
 
+const userRef = Database.ref('users');
+
 module.exports = {
     getClientToken: async (req, res) => {
         const uid = req.user.uid;
         gateway.clientToken.generate({}, function (err, response) {
             if (err) res.send(HttpResponse.badRequestError(err));
-            res.send(HttpResponse.ok({clientToken: response.clientToken}))
+            res.send(HttpResponse.ok({
+                user_id: uid,
+                clientToken: response.clientToken
+            }))
         });
     },
     executePayment: async (req, res) => {
+        const uid = req.user.uid;
+
         let message = {};
         // Get the nonce from the request body
         let nonce = req.body.nonce;
@@ -40,11 +47,18 @@ module.exports = {
         // Call the Braintree gateway to execute the payment
         gateway.transaction.sale(saleRequest, function (err, result) {
             if (err || !result.success) return res.send(HttpResponse.serverError(err));
-
-            // Return a success response to the client
-            return res.send(HttpResponse.ok({
-                id: result.transaction.id
-            }));
+            userRef.child(uid).update({
+                premiumAccount: {
+                    status: true,
+                    transactionId: result.transaction.id
+                }
+            }).then((data) => {
+                // Return a success response to the client
+                return res.send(HttpResponse.ok({
+                    transactionId: result.transaction.id,
+                    userId: uid
+                }));
+            }).catch(err => res.send(HttpResponse.badRequestError(err)));
         });
     }
 };
