@@ -3,6 +3,7 @@ package jmt.com.myapplication.activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
@@ -32,12 +33,13 @@ import com.google.firebase.database.ValueEventListener;
 import jmt.com.myapplication.R;
 import jmt.com.myapplication.fragments.BuyFragment;
 import jmt.com.myapplication.fragments.GroupsFragment;
+import jmt.com.myapplication.fragments.MeetingFragment;
 import jmt.com.myapplication.helpers.Helper;
 import jmt.com.myapplication.models.User;
 
 
 public class HomeActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener, MeetingFragment.OnFragmentInteractionListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -171,6 +173,10 @@ public class HomeActivity extends AppCompatActivity
                 setTitle("Premium Account");
                 fragment = new BuyFragment();
                 break;
+            case R.id.nav_meeting:
+                setTitle("Meeting");
+                fragment = new MeetingFragment();
+                break;
             case R.id.logoutBtn:
                 logout();
                 break;
@@ -184,5 +190,10 @@ public class HomeActivity extends AppCompatActivity
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
+    }
+
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+
     }
 }
