@@ -9,9 +9,13 @@
             android:icon="@drawable/ic_menu_send"
             android:title="Message" />
         <item
-            android:id="@+id/nav_menu2"
+            android:id="@+id/nav_meeting"
             android:icon="@drawable/ic_menu_send"
-            android:title="Menu 2" />
+            android:title="Meeting" />
+        <item
+            android:id="@+id/nav_menu3"
+            android:icon="@drawable/ic_menu_send"
+            android:title="Menu 3" />
     </group>
 
     <group android:id="@+id/settings">
