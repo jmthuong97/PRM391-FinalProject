@@ -53,10 +53,10 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class Helper {
+    public static long MAXIMUM_FILE_SIZE = 5 * 1024 * 1024; // equal to 10Mb
     private static final String GOOGLE = "google.com";
     private static final String FACEBOOK = "facebook.com";
-    private static final String LEGACY_SERVER_KEY = "AIzaSyC9XSD_4d8sPvgHysifZDVXDXY3deoI2CA";
-    public static final MediaType JSON
+    private static final MediaType JSON
             = MediaType.parse("application/json; charset=utf-8");
 
     public static void sendNotification(final String regToken, final String group, final String sender, final String msg) {
@@ -76,7 +76,7 @@ public class Helper {
 
                     RequestBody body = RequestBody.create(JSON, json.toString());
                     Request request = new Request.Builder()
-                            .header("Authorization", "key=" + LEGACY_SERVER_KEY)
+                            .header("Authorization", "key=" + BuildConfig.LEGACY_SERVER_KEY)
                             .url("https://fcm.googleapis.com/fcm/send")
                             .post(body)
                             .build();
@@ -424,6 +424,19 @@ public class Helper {
     // make a toast message
     public static void makeToastMessage(String message, Context context) {
         Toast.makeText(context, message, Toast.LENGTH_LONG).show();
+    }
+
+    // make a toast message for upload file
+    public static void makeMessageUploadFile(Context context) {
+        if (MAXIMUM_FILE_SIZE == 5 * 1024 * 1024)
+            Toast.makeText(context, "Maximum file size must be less than 5MB. Please upgrade Premium Account to upload more.", Toast.LENGTH_LONG).show();
+        else
+            Toast.makeText(context, "Maximum file size must be less than 20MB", Toast.LENGTH_LONG).show();
+    }
+
+    // upgrade premium account
+    public static void upgradeFileSize() {
+        MAXIMUM_FILE_SIZE = 20 * 1024 * 1024;
     }
 
 }

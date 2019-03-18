@@ -6,34 +6,59 @@
     android:background="@drawable/login_background"
     tools:context=".fragments.BuyFragment">
 
-    <TextView
-        android:id="@+id/txtPremium"
+    <ProgressBar
+        android:id="@+id/progressBarBuy"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="50dp"
-        android:text="Premium Account"
-        android:textColor="#ffbb00"
-        android:textStyle="bold"
-        android:textSize="30dp" />
+        android:layout_marginTop="10dp" />
 
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        android:layout_marginTop="10dp"
-        android:layout_below="@id/txtPremium"
-        android:layout_centerHorizontal="true"
-        android:src="@drawable/ic_premium" />
+    <RelativeLayout
+        android:id="@+id/layoutBuyFragment"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-    <Button
-        android:id="@+id/btn_payment"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="100dp"
-        android:layout_centerHorizontal="true"
-        android:text="Buy now"
-        android:background="#ffbb00"
-        android:textColor="#fff"
-        android:layout_below="@id/imageView" />
+        <TextView
+            android:id="@+id/txtPremium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="50dp"
+            android:text="Premium Account"
+            android:textColor="#ffbb00"
+            android:textSize="30dp"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_below="@id/txtPremium"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            android:src="@drawable/ic_premium" />
+
+        <TextView
+            android:id="@+id/description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/imageView"
+            android:layout_centerVertical="true"
+            android:layout_marginTop="3dp"
+            android:padding="20dp"
+            android:text="@string/txtpremiumaccount"
+            android:textColor="#fff" />
+
+        <Button
+            android:id="@+id/btn_payment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/description"
+            android:layout_centerHorizontal="true"
+            android:padding="10dp"
+            android:background="#ffbb00"
+            android:text="Buy now (only 10$)"
+            android:textColor="#fff" />
+    </RelativeLayout>
 </RelativeLayout>

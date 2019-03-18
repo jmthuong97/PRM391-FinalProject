@@ -39,6 +39,7 @@ import jmt.com.myapplication.models.User;
 
 public class CreateGroupFragment extends DialogFragment {
 
+    private static final int MAXIMUM_FILE_SIZE = 10 * 1024 * 1024;
     private final static int PICK_IMAGE_REQUEST = 1;
 
     DatabaseReference databaseReference;
@@ -104,8 +105,12 @@ public class CreateGroupFragment extends DialogFragment {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == PICK_IMAGE_REQUEST && resultCode == Activity.RESULT_OK
                 && data != null && data.getData() != null) {
-            fileSelected = data.getData();
-            fileNameSelected.setText(Helper.getFileName(fileSelected, getActivity()));
+            if (Helper.getSizeFile(data.getData(), getActivity()) <= MAXIMUM_FILE_SIZE) {
+                fileSelected = data.getData();
+                fileNameSelected.setText(Helper.getFileName(fileSelected, getActivity()));
+            } else
+                Helper.makeToastMessage("Maximum file image size must be less than 10MB", getContext());
+
         }
     }
 

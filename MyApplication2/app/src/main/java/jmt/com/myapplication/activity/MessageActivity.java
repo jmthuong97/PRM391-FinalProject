@@ -52,9 +52,7 @@ import jmt.com.myapplication.models.UserToken;
 import jmt.com.myapplication.viewholders.MessageViewHolder;
 
 public class MessageActivity extends AppCompatActivity {
-
     private final static int CHOOSE_FILE_REQUEST = 1;
-    private final static long MAXIMUM_FILE_SIZE = 10 * 1024 * 1024; // equal to 10Mb
     private static final int MSG_TYPE_LEFT = 56;
     private static final int MSG_TYPE_RIGHT = 97;
 
@@ -213,9 +211,9 @@ public class MessageActivity extends AppCompatActivity {
         final StorageReference ref = storageReference.child(path);
 
         if (isImageFile) uploadTask = ref.putBytes(Helper.reduceSizeImage(fileSelected, this));
-        else if (Helper.getSizeFile(fileSelected, this) < MAXIMUM_FILE_SIZE)
+        else if (Helper.getSizeFile(fileSelected, this) < Helper.MAXIMUM_FILE_SIZE)
             uploadTask = ref.putFile(fileSelected);
-        else Helper.makeToastMessage("Maximum file size must be less than 5MB", this);
+        else Helper.makeMessageUploadFile(this);
 
         if (uploadTask != null) {
             uploadFileProgress.setVisibility(View.VISIBLE); // show progress bar

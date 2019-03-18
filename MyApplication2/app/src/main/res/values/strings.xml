@@ -13,4 +13,9 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="txtpremiumaccount">
+        + Comfortable uploading files of less than 20mb.\n
+        + To do list feature, you can get it all done and enjoy more peace of mind along the way.\n
+        + and more in the near future… ^^
+    </string>
 </resources>

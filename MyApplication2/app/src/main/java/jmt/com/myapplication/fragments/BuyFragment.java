@@ -6,10 +6,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ProgressBar;
 
 import com.braintreepayments.api.BraintreeFragment;
 import com.braintreepayments.api.dropin.DropInRequest;
@@ -42,14 +44,13 @@ public class BuyFragment extends Fragment {
     private static final int REQUEST_CODE = 672;
     BraintreeFragment mBraintreeFragment;
 
-    private String clientToken, nonce;
+    private String clientToken;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         rootView = inflater.inflate(R.layout.fragment_buy, container, false);
-
         Button btnPayment = rootView.findViewById(R.id.btn_payment);
         btnPayment.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -59,6 +60,9 @@ public class BuyFragment extends Fragment {
                 startActivityForResult(dropInRequest.getIntent(getContext()), REQUEST_CODE);
             }
         });
+
+        final View layoutBuyFragment = rootView.findViewById(R.id.layoutBuyFragment);
+        final ProgressBar progressBar = rootView.findViewById(R.id.progressBarBuy);
 
         try {
             mBraintreeFragment = BraintreeFragment.newInstance(getActivity(), BuildConfig.PaypalClientId);
@@ -76,10 +80,8 @@ public class BuyFragment extends Fragment {
                     sendPayment(paramsURL);
                 }
             });
-
-            // mBraintreeFragment is ready to use!
         } catch (InvalidArgumentException e) {
-            // There was an issue with your authorization string.
+            Log.d("InvalidArgumentException", e.getMessage());
         }
 
         Map<String, String> paramsURL = new HashMap<>();
@@ -89,12 +91,13 @@ public class BuyFragment extends Fragment {
                 try {
                     JSONObject data = result.getJSONObject("data");
                     clientToken = data.getString("clientToken");
+                    progressBar.setVisibility(View.GONE);
+                    layoutBuyFragment.setVisibility(View.VISIBLE);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
             }
         });
-
         return rootView;
     }
 

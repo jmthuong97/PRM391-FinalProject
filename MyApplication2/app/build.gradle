@@ -6,6 +6,7 @@ def FACEBOOK_APP_ID = '"' + FacebookAppId + '"' ?: '"Define Facebook App Id"'
 def FBLOGINPROTOCOLSCHEME = '"' + FBLoginProtocolScheme + '"' ?: '"Define Faceebook Login Protocol Scheme"'
 def QRSECRETKEY = '"' + QRSecretKey + '"' ?: "Define QR Secret key"
 def PAYPAL_CLIENT_ID = '"' + PaypalClientId + '"' ?: "Define paypal client id"
+def LEGACY_SERVER_KEY = '"' + LEGACY_SERVER_KEY + '"' ?: "Define LEGACY SERVER KEY"
 // **************************************** //
 
 android {
@@ -24,6 +25,7 @@ android {
                 type.resValue "string", "fb_login_protocol_scheme", FBLOGINPROTOCOLSCHEME
                 type.buildConfigField "String", "QRSecretKey", QRSECRETKEY
                 type.buildConfigField "String", "PaypalClientId", PAYPAL_CLIENT_ID
+                type.buildConfigField "String", "LEGACY_SERVER_KEY", LEGACY_SERVER_KEY
         }
     }
     buildTypes {

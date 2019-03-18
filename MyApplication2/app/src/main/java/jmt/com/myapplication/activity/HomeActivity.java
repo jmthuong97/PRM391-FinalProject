@@ -75,13 +75,9 @@ public class HomeActivity extends AppCompatActivity
         navigationView.getMenu().getItem(0).setChecked(true);
 
         getCurrentUser();
-
-
-        getCurrentUser();
         //init token
 
         Helper.initToken();
-
         //noti response
         //if fail disable
         receiver = new MessageReceiver();
@@ -156,12 +152,14 @@ public class HomeActivity extends AppCompatActivity
         databaseReference.child(childPath).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (dataSnapshot.getValue().equals(true)) {
+                if (dataSnapshot.getValue() != null && dataSnapshot.getValue().equals(true)) {
                     ImageView premiumAcc = findViewById(R.id.ic_premium_account);
                     premiumAcc.setVisibility(View.VISIBLE);
+                    Helper.upgradeFileSize();
                     NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
                     Menu nav_Menu = navigationView.getMenu();
                     nav_Menu.findItem(R.id.donateBtn).setVisible(false);
+                    nav_Menu.findItem(R.id.nav_toDoList).setVisible(true);
                 } else {
                     Log.d("Premium Account", dataSnapshot.getValue().toString());
                 }

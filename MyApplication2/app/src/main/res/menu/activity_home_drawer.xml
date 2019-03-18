@@ -10,6 +10,7 @@
             android:title="Message" />
         <item
             android:id="@+id/nav_toDoList"
+            android:visible="false"
             android:icon="@drawable/ic_check_black_24dp"
             android:title="To Do List" />
     </group>
