@@ -1,13 +1,22 @@
 package jmt.com.myapplication.activity;
 
 import android.app.AlertDialog;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.RemoteInput;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -39,6 +48,12 @@ import jmt.com.myapplication.models.User;
 public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+
+    MessageReceiver receiver;
+    private final String NOTIFICATION_CHANEL = "My notification chanel";
+    private final int NOTIFICATION_ID = 100;
+    private final String KEY_TEXT_REPLY = "RESULT_KEY";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,6 +74,34 @@ public class HomeActivity extends AppCompatActivity
         navigationView.getMenu().getItem(0).setChecked(true);
 
         getCurrentUser();
+
+
+        getCurrentUser();
+        //init token
+
+        Helper.initToken();
+
+        //noti response
+        //if fail disable
+        receiver = new MessageReceiver();
+        Intent intent = getIntent();
+        Bundle bundle = RemoteInput.getResultsFromIntent(intent);
+        if(bundle != null){
+            NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+            manager.cancel(NOTIFICATION_ID);
+            String msg= bundle.getString(KEY_TEXT_REPLY);
+
+            Bundle bundleInc = intent.getExtras();
+
+            String displayName ="";
+            if(bundleInc!=null){
+                displayName = bundleInc.getString("title");
+                Log.d("bigboy", " big boi bundle got "+ bundleInc.getString("title") + bundle.getString("title"));
+            }
+
+            Helper.notiRep(msg,displayName);
+
+        }
     }
 
     private void getCurrentUser() {
@@ -184,5 +227,73 @@ public class HomeActivity extends AppCompatActivity
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
+    }
+    public class MessageReceiver extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            Bundle bundle = intent.getExtras();
+            String message="";
+            String title="";
+            if(bundle!=null){
+                message = bundle.getString("Message");
+                title = bundle.getString("Title");
+            }
+            Log.d("bigboy", "bigboi received title" +title);
+
+            createNotification(message,title);
+        }
+    }
+    private void createNotification(String message,String title) {
+        Intent intent = new Intent(this, HomeActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putString("title",title);
+        intent.putExtras(bundle);
+
+        Log.d("bigboy", "big boi in bundle title " +title);
+
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0,
+                intent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+
+        RemoteInput remoteInput = new RemoteInput.Builder(KEY_TEXT_REPLY)
+                .setLabel("Enter text here")
+                .build();
+        NotificationCompat.Action action = new NotificationCompat.Action.Builder(
+                android.R.drawable.ic_dialog_alert,
+                "Reply",
+                pendingIntent)
+                .addRemoteInput(remoteInput)
+                .build();
+
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this)
+                .setColor(Color.argb(255, 0, 0, 255))
+                .setSmallIcon(android.R.drawable.ic_dialog_info)
+                .setContentTitle(title)
+                .setContentText(message)
+                .setChannelId(NOTIFICATION_CHANEL)
+                .setContentIntent(pendingIntent)
+                .addAction(action);
+
+        NotificationChannel channel = new NotificationChannel(
+                NOTIFICATION_CHANEL,
+                "Notification chanel",
+                NotificationManager.IMPORTANCE_HIGH);
+
+        NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        notificationManager.createNotificationChannel(channel);
+        notificationManager.notify(NOTIFICATION_ID, builder.build());
+    }
+
+
+    @Override
+    protected void onResume() {
+        registerReceiver(receiver, new IntentFilter("FIREBASE_MESSAGE_ACTION"));
+        super.onResume();
+    }
+
+    @Override
+    protected void onPause() {
+        unregisterReceiver(receiver);
+        super.onPause();
     }
 }
