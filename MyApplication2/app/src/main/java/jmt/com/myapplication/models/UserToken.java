@@ -4,10 +4,11 @@ public class UserToken {
     private String uid;
     private String token;
 
-    public UserToken(){
+    public UserToken() {
 
     }
-    public UserToken(String uid, String token){
+
+    public UserToken(String uid, String token) {
         this.token = token;
         this.uid = uid;
     }

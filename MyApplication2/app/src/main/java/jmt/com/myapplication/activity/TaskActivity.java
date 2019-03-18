@@ -1,9 +1,9 @@
 package jmt.com.myapplication.activity;
 
 import android.content.Intent;
-import android.support.v4.app.FragmentActivity;
-import android.support.v7.app.AppCompatActivity;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -23,7 +23,7 @@ public class TaskActivity extends AppCompatActivity {
     private EditText getName, getDate, getDescription;
     private CheckBox checkFinish;
     private DBHelper database;
-    private Button btnOk;
+    private Button btnOk, btnDelete;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,32 +37,30 @@ public class TaskActivity extends AppCompatActivity {
         String getId = intent.getStringExtra("TaskId");
         status = intent.getStringExtra("Status");
         id = Integer.parseInt(getId);
-
         database = new DBHelper(this, null, null, 1);
         header = findViewById(R.id.header);
-
-        header.setText("To-Do-Task: " + date);
         getName = findViewById(R.id.showTaskName);
         getDate = findViewById(R.id.showDate);
         getDescription = findViewById(R.id.showDescription);
         checkFinish = findViewById(R.id.finishOrNot);
         btnOk = findViewById(R.id.okButton);
-        if(status.equalsIgnoreCase("true")){
+        btnDelete = findViewById(R.id.Delete);
+        if (status.equalsIgnoreCase("true")) {
             checkFinish.setChecked(true);
-        }else{
+        } else {
             checkFinish.setChecked(false);
         }
-
-
         setTextForShow();
         run();
     }
-
 
     private void setTextForShow() {
         getName.setText(name);
         getDate.setText(date);
         getDescription.setText(description);
+        getName.setTextColor(Color.parseColor("#272284"));
+        getDate.setTextColor(Color.parseColor("#272284"));
+        getDescription.setTextColor(Color.parseColor("#272284"));
     }
 
     private void run() {
@@ -70,6 +68,13 @@ public class TaskActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 editData();
+                finish();
+            }
+        });
+        btnDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                database.deleteTask(id);
                 finish();
             }
         });
@@ -86,9 +91,11 @@ public class TaskActivity extends AppCompatActivity {
         if (checkFinish.isChecked()) {
             toDoList.setStatus(true);
             database.updateTask(toDoList);
-        }else{
+        } else {
             toDoList.setStatus(false);
             database.updateTask(toDoList);
         }
     }
+
+
 }

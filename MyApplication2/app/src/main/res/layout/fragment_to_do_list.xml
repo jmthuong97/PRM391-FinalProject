@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/ToDoListFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".fragments.ToDoListFragment">
-
 
 
     <ProgressBar
@@ -19,9 +17,7 @@
     <android.support.v7.widget.RecyclerView
         android:id="@+id/toDoListRecycleView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
-
-
+        android:layout_height="match_parent" />
 
 
     <android.support.design.widget.FloatingActionButton
@@ -32,8 +28,6 @@
         android:layout_alignParentBottom="true"
         android:layout_margin="16dp"
         android:src="@drawable/add_btn" />
-
-
 
 
 </RelativeLayout>

@@ -1,7 +1,5 @@
 package jmt.com.myapplication.helpers;
 
-import org.json.JSONObject;
-
 import android.app.Activity;
 import android.content.ContentResolver;
 import android.content.Context;
@@ -57,36 +55,37 @@ import okhttp3.Response;
 public class Helper {
     private static final String GOOGLE = "google.com";
     private static final String FACEBOOK = "facebook.com";
-    private static final String LEGACY_SERVER_KEY="AIzaSyC9XSD_4d8sPvgHysifZDVXDXY3deoI2CA";
+    private static final String LEGACY_SERVER_KEY = "AIzaSyC9XSD_4d8sPvgHysifZDVXDXY3deoI2CA";
     public static final MediaType JSON
             = MediaType.parse("application/json; charset=utf-8");
-    public static void sendNotification(final String regToken,final String group, final String sender,final String msg) {
-        new AsyncTask<Void,Void,Void>(){
+
+    public static void sendNotification(final String regToken, final String group, final String sender, final String msg) {
+        new AsyncTask<Void, Void, Void>() {
             @Override
             protected Void doInBackground(Void... params) {
                 try {
-                    Log.i("testsend","sending to token: "+regToken);
+                    Log.i("testsend", "sending to token: " + regToken);
                     OkHttpClient client = new OkHttpClient();
-                    JSONObject json=new JSONObject();
-                    JSONObject dataJson=new JSONObject();
-                    dataJson.put("body",sender+": "+msg);
-                    dataJson.put("title",group);
-                    json.put("notification",dataJson);
-                    json.put("to",regToken);
-                    json.put("priority","high");
+                    JSONObject json = new JSONObject();
+                    JSONObject dataJson = new JSONObject();
+                    dataJson.put("body", sender + ": " + msg);
+                    dataJson.put("title", group);
+                    json.put("notification", dataJson);
+                    json.put("to", regToken);
+                    json.put("priority", "high");
 
                     RequestBody body = RequestBody.create(JSON, json.toString());
                     Request request = new Request.Builder()
-                            .header("Authorization","key="+LEGACY_SERVER_KEY)
+                            .header("Authorization", "key=" + LEGACY_SERVER_KEY)
                             .url("https://fcm.googleapis.com/fcm/send")
                             .post(body)
                             .build();
                     Response response = client.newCall(request).execute();
                     String finalResponse = response.body().string();
-                    Log.d("testsend","response: " +finalResponse);
+                    Log.d("testsend", "response: " + finalResponse);
 
-                }catch (Exception e){
-                    Log.d("nothing","failed to send cause: " +e);
+                } catch (Exception e) {
+                    Log.d("nothing", "failed to send cause: " + e);
                 }
                 return null;
             }
@@ -96,7 +95,7 @@ public class Helper {
 
     static DatabaseReference databaseReference;
 
-    public static void sendMessage(final String content, String type, String fileURL,String displayName,String gID) {
+    public static void sendMessage(final String content, String type, String fileURL, String displayName, String gID) {
         Log.d("bigboy", "sending bigboi msg");
 
         databaseReference = FirebaseDatabase.getInstance().getReference("messages");
@@ -108,14 +107,14 @@ public class Helper {
         message.setType(type);
         message.setId(idMessage);
         message.setSender(getCurrentUser());
-        Log.d("bigboy", "bigboi msg sent with ID" +gID);
+        Log.d("bigboy", "bigboi msg sent with ID" + gID);
 
         databaseReference.child(gID).child(idMessage).setValue(message);
 
-        sendNoti(content,gID,displayName);
+        sendNoti(content, gID, displayName);
     }
 
-    public static void sendNoti(final String contentNoti, final String gID,final String displayName){
+    public static void sendNoti(final String contentNoti, final String gID, final String displayName) {
         Log.d("bigboy", "sending bigboi noti");
 
         DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
@@ -124,26 +123,26 @@ public class Helper {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 final List<String> listUser = new ArrayList<>();
-                for(DataSnapshot ds : dataSnapshot.getChildren()) {
-                    String groupID =  ds.getValue(Group.class).getId();
-                    Log.d("test send", "current groups:" +groupID);
+                for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                    String groupID = ds.getValue(Group.class).getId();
+                    Log.d("test send", "current groups:" + groupID);
                     Log.d("test send", gID);
 
-                    if(groupID.equalsIgnoreCase(gID)){
+                    if (groupID.equalsIgnoreCase(gID)) {
                         List<String> membersID = ds.getValue(Group.class).getMembers();
-                        Log.d("test send", "list of member from group:" +membersID.toString());
-                        for(int i = 0 ; i <membersID.size();i++) {
-                            if(membersID.get(i).equalsIgnoreCase(getCurrentUser().getUid())) {
+                        Log.d("test send", "list of member from group:" + membersID.toString());
+                        for (int i = 0; i < membersID.size(); i++) {
+                            if (membersID.get(i).equalsIgnoreCase(getCurrentUser().getUid())) {
                                 Log.d("test send", " member send group:" + getCurrentUser().getUid());
                                 membersID.remove(i);
                             }
                         }
-                        Log.d("test send", "list of member from group:" +membersID.toString());
+                        Log.d("test send", "list of member from group:" + membersID.toString());
 
 
-                        for(int i = 0 ; i <membersID.size();i++){
+                        for (int i = 0; i < membersID.size(); i++) {
                             final String currentMem = membersID.get(i);
-                            Log.d("test send", "current member: " +currentMem);
+                            Log.d("test send", "current member: " + currentMem);
 
                             DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
                             DatabaseReference searchRef = rootRef.child("userToken");
@@ -151,21 +150,23 @@ public class Helper {
                                 @Override
                                 public void onDataChange(DataSnapshot dataSnapshot) {
 
-                                    for(DataSnapshot ds : dataSnapshot.getChildren()) {
-                                        String value =  ds.getValue(UserToken.class).getUid();
-                                        Log.d("test send", "user id in token tbl: " +value);
+                                    for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                                        String value = ds.getValue(UserToken.class).getUid();
+                                        Log.d("test send", "user id in token tbl: " + value);
 
-                                        if(value.equalsIgnoreCase(currentMem)){
-                                            Log.d("test send", "found user id and sending to token:" +ds.getValue(UserToken.class).getToken());
+                                        if (value.equalsIgnoreCase(currentMem)) {
+                                            Log.d("test send", "found user id and sending to token:" + ds.getValue(UserToken.class).getToken());
 
                                             Helper.sendNotification(ds.getValue(UserToken.class).getToken(),
-                                                    displayName,Helper.getCurrentUser().getDisplayName(),
+                                                    displayName, Helper.getCurrentUser().getDisplayName(),
                                                     contentNoti);
                                         }
                                     }
                                 }
+
                                 @Override
-                                public void onCancelled(DatabaseError databaseError) {}
+                                public void onCancelled(DatabaseError databaseError) {
+                                }
                             };
                             searchRef.addListenerForSingleValueEvent(valueEventListener);
                         }
@@ -174,23 +175,27 @@ public class Helper {
                 }
                 Log.d("TAG", listUser.toString());
             }
+
             @Override
-            public void onCancelled(DatabaseError databaseError) {}
+            public void onCancelled(DatabaseError databaseError) {
+            }
         };
         searchRef.addListenerForSingleValueEvent(valueEventListener);
     }
+
     static List<String> listUser = new ArrayList<>();
     static List<String> listToken = new ArrayList<>();
     static boolean doneAdd = false;
     static boolean add = true;
-    public static void initToken(){
+
+    public static void initToken() {
         DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
         DatabaseReference searchRef = rootRef.child("userToken");
         ValueEventListener valueEventListener = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
-                for(DataSnapshot ds : dataSnapshot.getChildren()) {
+                for (DataSnapshot ds : dataSnapshot.getChildren()) {
 
                     if (doneAdd == false) {
                         String value = ds.getValue(UserToken.class).getUid();
@@ -210,15 +215,14 @@ public class Helper {
                                         Log.d("mytoken", tokenStr);
                                         for (int i = 0; i < listUser.size(); i++) {
                                             Log.d("special", listUser.toString());
-                                            if(listUser.get(i).equalsIgnoreCase(getCurrentUser().getUid())&&listToken.get(i).equalsIgnoreCase(tokenStr))
-                                            {
+                                            if (listUser.get(i).equalsIgnoreCase(getCurrentUser().getUid()) && listToken.get(i).equalsIgnoreCase(tokenStr)) {
                                                 add = false;
                                                 break;
                                             }
                                         }
                                         Log.d("TAG", getCurrentUser().getUid() + ": " + add);
                                         if (add == true && doneAdd == false) {
-                                            doneAdd =  true;
+                                            doneAdd = true;
                                             DatabaseReference databaseReference;
                                             databaseReference = FirebaseDatabase.getInstance().getReference("userToken");
                                             String idToken = databaseReference.push().getKey();
@@ -234,14 +238,18 @@ public class Helper {
                 }
                 Log.d("TAG", listUser.toString());
             }
+
             @Override
-            public void onCancelled(DatabaseError databaseError) {}
+            public void onCancelled(DatabaseError databaseError) {
+            }
         };
 
         searchRef.addListenerForSingleValueEvent(valueEventListener);
     }
+
     static String tempGID;
-    public static void notiRep(final String msg, final String displayName){
+
+    public static void notiRep(final String msg, final String displayName) {
 
         DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
         DatabaseReference searchRef = rootRef.child("groups");
@@ -249,20 +257,22 @@ public class Helper {
 
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                for(DataSnapshot ds : dataSnapshot.getChildren()) {
-                    String value =  ds.getValue(Group.class).getDisplayName();
-                    Log.d("bigboy", "bigboi Name " +value);
+                for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                    String value = ds.getValue(Group.class).getDisplayName();
+                    Log.d("bigboy", "bigboi Name " + value);
 
-                    if(value.equalsIgnoreCase(displayName)){
-                        Log.d("bigboy", "bigboi ding ding ding: "+value +" = " +displayName);
+                    if (value.equalsIgnoreCase(displayName)) {
+                        Log.d("bigboy", "bigboi ding ding ding: " + value + " = " + displayName);
                         tempGID = ds.getValue(Group.class).getId();
-                        Log.d("bigboy", "bigboi ding ding ding ID: "+tempGID);
-                        sendMessage(msg, Message.TEXT,"NONE",displayName,tempGID);
+                        Log.d("bigboy", "bigboi ding ding ding ID: " + tempGID);
+                        sendMessage(msg, Message.TEXT, "NONE", displayName, tempGID);
                     }
                 }
             }
+
             @Override
-            public void onCancelled(DatabaseError databaseError) {}
+            public void onCancelled(DatabaseError databaseError) {
+            }
         };
         searchRef.addListenerForSingleValueEvent(valueEventListener);
 

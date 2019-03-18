@@ -9,7 +9,6 @@ public class ToDoList {
     private boolean status;
 
 
-
     public ToDoList(int id, String name, String desciption, String date, boolean status, String userID) {
         this.id = id;
         this.name = name;

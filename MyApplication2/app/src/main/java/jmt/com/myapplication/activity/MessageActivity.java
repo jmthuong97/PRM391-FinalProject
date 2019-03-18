@@ -274,7 +274,7 @@ public class MessageActivity extends AppCompatActivity {
         sendNoti(content);
     }
 
-    public void sendNoti(final String contentNoti){
+    public void sendNoti(final String contentNoti) {
         Log.d("testsend", "sending noti");
 
         DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
@@ -283,18 +283,18 @@ public class MessageActivity extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 final List<String> listUser = new ArrayList<>();
-                for(DataSnapshot ds : dataSnapshot.getChildren()) {
-                    String groupID =  ds.getValue(Group.class).getId();
-                    Log.d("test send", "current groups:" +groupID);
+                for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                    String groupID = ds.getValue(Group.class).getId();
+                    Log.d("test send", "current groups:" + groupID);
                     Log.d("test send", currentGroupId);
 
-                    if(groupID.equalsIgnoreCase(currentGroupId)){
+                    if (groupID.equalsIgnoreCase(currentGroupId)) {
                         List<String> membersID = ds.getValue(Group.class).getMembers();
-                        Log.d("test send", "list of member from group:" +membersID.toString());
+                        Log.d("test send", "list of member from group:" + membersID.toString());
 
-                        for(int i = 0 ; i <membersID.size();i++){
+                        for (int i = 0; i < membersID.size(); i++) {
                             final String currentMem = membersID.get(i);
-                            Log.d("test send", "current member: " +currentMem);
+                            Log.d("test send", "current member: " + currentMem);
 
                             DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
                             DatabaseReference searchRef = rootRef.child("userToken");
@@ -302,21 +302,23 @@ public class MessageActivity extends AppCompatActivity {
                                 @Override
                                 public void onDataChange(DataSnapshot dataSnapshot) {
 
-                                    for(DataSnapshot ds : dataSnapshot.getChildren()) {
-                                        String value =  ds.getValue(UserToken.class).getUid();
-                                        Log.d("test send", "user id in token tbl: " +value);
+                                    for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                                        String value = ds.getValue(UserToken.class).getUid();
+                                        Log.d("test send", "user id in token tbl: " + value);
 
-                                        if(value.equalsIgnoreCase(currentMem)){
-                                            Log.d("test send", "found user id and sending to token:" +ds.getValue(UserToken.class).getToken());
+                                        if (value.equalsIgnoreCase(currentMem)) {
+                                            Log.d("test send", "found user id and sending to token:" + ds.getValue(UserToken.class).getToken());
 
                                             Helper.sendNotification(ds.getValue(UserToken.class).getToken(),
-                                                    displayName,Helper.getCurrentUser().getDisplayName(),
+                                                    displayName, Helper.getCurrentUser().getDisplayName(),
                                                     contentNoti);
                                         }
                                     }
                                 }
+
                                 @Override
-                                public void onCancelled(DatabaseError databaseError) {}
+                                public void onCancelled(DatabaseError databaseError) {
+                                }
                             };
                             searchRef.addListenerForSingleValueEvent(valueEventListener);
                         }
@@ -325,8 +327,10 @@ public class MessageActivity extends AppCompatActivity {
                 }
                 Log.d("TAG", listUser.toString());
             }
+
             @Override
-            public void onCancelled(DatabaseError databaseError) {}
+            public void onCancelled(DatabaseError databaseError) {
+            }
         };
         searchRef.addListenerForSingleValueEvent(valueEventListener);
     }

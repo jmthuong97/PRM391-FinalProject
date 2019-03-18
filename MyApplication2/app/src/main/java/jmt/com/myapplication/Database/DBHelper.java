@@ -3,7 +3,6 @@ package jmt.com.myapplication.Database;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
-import android.database.DatabaseErrorHandler;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
@@ -70,47 +69,43 @@ public class DBHelper extends SQLiteOpenHelper {
         return result;
     }
 
-    public int updateTask(ToDoList toDoList){
+    public int updateTask(ToDoList toDoList) {
         int status;
         if (toDoList.isStatus()) {
             status = 1;
         } else {
             status = 0;
         }
-        int id = toDoList.getId();
-        String user = toDoList.getUserID();
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(COLUMN_STATUS, status);
 
         // updating row
-        int result = db.update(DB_TABLE, values, COLUMN_USERID + " = ? AND " + COLUMN_ID+" = ? ",
+        int result = db.update(DB_TABLE, values, COLUMN_USERID + " = ? AND " + COLUMN_ID + " = ? ",
                 new String[]{String.valueOf(toDoList.getUserID()), String.valueOf(toDoList.getId())});
         db.close();
         return result;
     }
 
-    public void deleteTask(int id){
-        String whereClause = "_id=?";
-        String [] whereArgs = new String []{id+""};
+    public void deleteTask(int id) {
+        String whereClause = COLUMN_ID + " = ? ";
+        String[] whereArgs = new String[]{id + ""};
         SQLiteDatabase db = getWritableDatabase();
-        db.delete(DB_TABLE,whereClause,whereArgs);
+        db.delete(DB_TABLE, whereClause, whereArgs);
         db.close();
     }
 
-    public ArrayList<ToDoList> getTaskList(String userID){
+    public ArrayList<ToDoList> getTaskList(String userID) {
         ArrayList<ToDoList> taskList = new ArrayList<>();
         SQLiteDatabase db = getWritableDatabase();
-        String selectQuery = "Select * from "+ DB_TABLE + " where UserID=" + "\"" + userID + "\"";
-        Cursor cursor = db.rawQuery(selectQuery,null);
-        while(cursor.moveToNext()){
-//
+        String selectQuery = "Select * from " + DB_TABLE + " where UserID=" + "\"" + userID + "\"";
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        while (cursor.moveToNext()) {
             boolean status = true;
-            if(Integer.parseInt(cursor.getString(5)) == 0){
+            if (Integer.parseInt(cursor.getString(5)) == 0) {
                 status = false;
             }
-
-            ToDoList todoLists= new ToDoList();
+            ToDoList todoLists = new ToDoList();
             todoLists.setId(Integer.parseInt(cursor.getString(0)));
             todoLists.setUserID(cursor.getString(1));
             todoLists.setName(cursor.getString(2));

@@ -13,28 +13,19 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-
-
-
-
 import java.util.ArrayList;
-
-
 
 import jmt.com.myapplication.Database.DBHelper;
 import jmt.com.myapplication.R;
-
-
 import jmt.com.myapplication.adapters.TodolistAdapter;
 import jmt.com.myapplication.helpers.Helper;
-
+import jmt.com.myapplication.helpers.ICreateTaskSuccess;
 import jmt.com.myapplication.models.ToDoList;
 import jmt.com.myapplication.models.User;
 
 
 public class ToDoListFragment extends Fragment {
 
-    private boolean checkBackFromPreviousFragment;
     private RecyclerView recyclerView;
     private TodolistAdapter todolistAdapter;
     private View rootView;
@@ -57,37 +48,30 @@ public class ToDoListFragment extends Fragment {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        checkBackFromPreviousFragment = false;
 
         FloatingActionButton addTask = rootView.findViewById(R.id.addToDoTask);
         addTask.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                CreateTaskFragment createTaskFragment = new CreateTaskFragment();
-                FragmentTransaction transaction = fragmentManager.beginTransaction();
-                transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-                transaction.add(android.R.id.content, createTaskFragment).addToBackStack(null).commit();
+                openCreateTaskFragment();
             }
         });
 
-        getDataGroups();
+        getDataTodolist();
         super.onStart();
     }
 
-    @Override
-    public void onResume() {
-        if(checkBackFromPreviousFragment){
-            getDataGroups();
-        }
-
-        super.onResume();
-    }
-
-    @Override
-    public void onPause() {
-        checkBackFromPreviousFragment = true;
-        super.onPause();
+    private void openCreateTaskFragment() {
+        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+        CreateTaskFragment createTaskFragment = new CreateTaskFragment(new ICreateTaskSuccess() {
+            @Override
+            public void success() {
+                getDataTodolist();
+            }
+        });
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+        transaction.add(android.R.id.content, createTaskFragment).addToBackStack(null).commit();
     }
 
     @Override
@@ -97,21 +81,21 @@ public class ToDoListFragment extends Fragment {
 
     }
 
-    private void getDataGroups() {
+    private void getDataTodolist() {
         final User currentUser = Helper.getCurrentUser();
         checkList = database.getTaskList(currentUser.getUid());
 
         if (!checkList.isEmpty()) {
-
             rootView.findViewById(R.id.progressBar).setVisibility(View.GONE);
             todolistAdapter = new TodolistAdapter(getContext(), checkList);
             recyclerView.setAdapter(todolistAdapter);
-
         } else {
             rootView.findViewById(R.id.progressBar).setVisibility(View.GONE);
+            if (todolistAdapter != null) {
+                todolistAdapter.notifyDataSetChanged();
+            }
+
             Helper.makeToastMessage("No To Do List Found !!", getContext());
         }
-
-
     }
 }
