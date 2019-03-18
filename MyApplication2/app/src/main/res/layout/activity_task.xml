@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".activity.TaskActivity">
+
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+
+
+            <TextView
+                android:id="@+id/header"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="20dp"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:text="Create new Task"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Title"
+                android:textColor="@android:color/white" />
+
+        </LinearLayout>
+
+    </android.support.design.widget.AppBarLayout>
+    <ScrollView
+        android:id="@+id/scrollViewAddTask"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:id="@+id/showTaskLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity=""
+            android:orientation="vertical"
+            android:padding="20dp">
+            <TextView
+                android:id="@+id/TaskName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="100dp"
+                android:text="Task name"
+
+                android:textSize="15sp" />
+
+
+            <EditText
+                android:id="@+id/showTaskName"
+                android:layout_width="match_parent"
+                android:layout_height="44dp"
+                android:enabled="false"
+                 />
+
+            <TextView
+                android:id="@+id/TaskDescription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="60dp"
+
+                android:text="Description"
+
+                android:textSize="15sp" />
+
+            <EditText
+                android:id="@+id/showDescription"
+                android:layout_width="match_parent"
+                android:layout_height="44dp"
+                android:enabled="false"
+                 />
+
+            <TextView
+                android:id="@+id/Date"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="60dp"
+
+                android:text="Created Date"
+
+                android:textSize="15sp" />
+
+            <EditText
+                android:id="@+id/showDate"
+                android:layout_width="match_parent"
+                android:layout_height="44dp"
+
+                android:enabled="false"
+                android:hint="Date"
+                android:inputType="date" />
+
+            <CheckBox
+                android:id="@+id/finishOrNot"
+                android:layout_width="match_parent"
+                android:layout_height="44dp"
+
+                android:text="Mark as finish!"
+                />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:layout_marginTop="60dp"
+                android:layout_weight="1">
+
+                <Button
+                    android:id="@+id/okButton"
+                    android:layout_width="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:text="Ok"/>
+            </LinearLayout>
+        </LinearLayout>
+
+    </ScrollView>
+</LinearLayout>

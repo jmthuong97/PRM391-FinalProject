@@ -9,9 +9,9 @@
             android:icon="@drawable/ic_menu_send"
             android:title="Message" />
         <item
-            android:id="@+id/nav_menu2"
+            android:id="@+id/nav_toDoList"
             android:icon="@drawable/ic_menu_send"
-            android:title="Menu 2" />
+            android:title="To Do List" />
     </group>
 
     <group android:id="@+id/settings">

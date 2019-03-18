@@ -27,6 +27,7 @@ import com.google.android.gms.tasks.Task;
 import jmt.com.myapplication.R;
 import jmt.com.myapplication.fragments.DonateFragment;
 import jmt.com.myapplication.fragments.GroupsFragment;
+import jmt.com.myapplication.fragments.ToDoListFragment;
 import jmt.com.myapplication.helpers.Helper;
 import jmt.com.myapplication.models.User;
 
@@ -132,6 +133,10 @@ public class HomeActivity extends AppCompatActivity
                 break;
             case R.id.logoutBtn:
                 logout();
+                break;
+            case R.id.nav_toDoList:
+                setTitle("To Do List");
+                fragment = new ToDoListFragment();
                 break;
         }
 
