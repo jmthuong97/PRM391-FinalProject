@@ -8,7 +8,7 @@ N/A
 ### Referencees
 1. [Firebase Documentation](https://firebase.google.com/docs/)
 2. [Braintree Documentation](https://developers.braintreepayments.com/guides/paypal/overview/android/v2)
-3. [ZXing Documentation](https://zxing.github.io/zxing/apidocs/)
+3. [ZXing Documentation](https://github.com/zxing/zxing)
 ## Overall Description
 ### Software Perspective
 -    Simple GUI design should be friendly for all people.
