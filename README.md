@@ -29,17 +29,17 @@ N/A
 - Android 8.0 and above
 - Tested device: S7 edge, Sony XZ, Galaxy S5
 ### Use case
-ID | Actor | Name | 
---- | --- | --- | ---
-UC-1 | User | Login
-UC-2 | User | Logout
-UC-3 | User | Create group
-UC-4 | User | Join group
-UC-5 | User | Send message
-UC-6 | User | Upload file
-UC-7 | User | Upgrade premium account
-UC-8 | User | Create to do list
-UC-9 | User | View group chat
-UC-10 | User | Update task stats
-UC-11 | User | Remove task
+|    ID    |  Actor  |  Name  | 
+| ------- | ------- | ------- |
+| UC-1 | User | Login |
+| UC-2 | User | Logout |
+| UC-3 | User | Create group |
+| UC-4 | User | Join group |
+| UC-5 | User | Send message |
+| UC-6 | User | Upload file |
+| UC-7 | User | Upgrade premium account |
+| UC-8 | User | Create to do list |
+| UC-9 | User | View group chat |
+| UC-10 | User | Update task stats |
+| UC-11 | User | Remove task |
 
