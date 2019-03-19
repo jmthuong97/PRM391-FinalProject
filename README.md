@@ -6,7 +6,9 @@ Is the software that help collaboration works by connect all people on the same 
 ### Scope
 N/A
 ### Referencees
-N/A
+1. ![Firebase Documentation](https://firebase.google.com/docs/)
+2. ![Braintree Documentation](https://developers.braintreepayments.com/guides/paypal/overview/android/v2)
+3. ![ZXing Documentation](https://zxing.github.io/zxing/apidocs/)
 ## Overall Description
 ### Software Perspective
 -    Simple GUI design should be friendly for all people.
@@ -42,4 +44,3 @@ N/A
 | UC-9 | User | View group chat |
 | UC-10 | User | Update task stats |
 | UC-11 | User | Remove task |
-
