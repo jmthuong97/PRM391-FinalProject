@@ -52,8 +52,6 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
-import static jmt.com.myapplication.BuildConfig.LEGACY_SERVER_KEY;
-
 public class Helper {
     public static long MAXIMUM_FILE_SIZE = 5 * 1024 * 1024; // equal to 10Mb
     private static final String GOOGLE = "google.com";
@@ -66,7 +64,6 @@ public class Helper {
             @Override
             protected Void doInBackground(Void... params) {
                 try {
-                    Log.i("testsend", "sending to token: " + regToken);
                     OkHttpClient client = new OkHttpClient();
                     JSONObject json = new JSONObject();
                     JSONObject dataJson = new JSONObject();
@@ -78,14 +75,12 @@ public class Helper {
 
                     RequestBody body = RequestBody.create(JSON, json.toString());
                     Request request = new Request.Builder()
-                            .header("Authorization", "key=" + LEGACY_SERVER_KEY)
+                            .header("Authorization", "key=" + BuildConfig.LEGACY_SERVER_KEY)
                             .url("https://fcm.googleapis.com/fcm/send")
                             .post(body)
                             .build();
                     Response response = client.newCall(request).execute();
                     String finalResponse = response.body().string();
-                    Log.d("testsend", "response: " + finalResponse);
-
                 } catch (Exception e) {
                     Log.d("nothing", "failed to send cause: " + e);
                 }
@@ -95,11 +90,9 @@ public class Helper {
 
     }
 
-    static DatabaseReference databaseReference;
+    private static DatabaseReference databaseReference;
 
-    public static void sendMessage(final String content, String type, String fileURL, String displayName, String gID) {
-        Log.d("bigboy", "sending bigboi msg");
-
+    private static void sendMessage(final String content, String type, String fileURL, String displayName, String gID) {
         databaseReference = FirebaseDatabase.getInstance().getReference("messages");
         String idMessage = databaseReference.push().getKey();
 
@@ -109,56 +102,35 @@ public class Helper {
         message.setType(type);
         message.setId(idMessage);
         message.setSender(getCurrentUser());
-        Log.d("bigboy", "bigboi msg sent with ID" + gID);
-
         databaseReference.child(gID).child(idMessage).setValue(message);
-
         sendNoti(content, gID, displayName);
     }
 
-    public static void sendNoti(final String contentNoti, final String gID, final String displayName) {
-        Log.d("bigboy", "sending bigboi noti");
-
+    private static void sendNoti(final String contentNoti, final String gID, final String displayName) {
         DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
         DatabaseReference searchRef = rootRef.child("groups");
         ValueEventListener valueEventListener = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                final List<String> listUser = new ArrayList<>();
                 for (DataSnapshot ds : dataSnapshot.getChildren()) {
                     String groupID = ds.getValue(Group.class).getId();
-                    Log.d("test send", "current groups:" + groupID);
-                    Log.d("test send", gID);
-
                     if (groupID.equalsIgnoreCase(gID)) {
                         List<String> membersID = ds.getValue(Group.class).getMembers();
-                        Log.d("test send", "list of member from group:" + membersID.toString());
                         for (int i = 0; i < membersID.size(); i++) {
                             if (membersID.get(i).equalsIgnoreCase(getCurrentUser().getUid())) {
-                                Log.d("test send", " member send group:" + getCurrentUser().getUid());
                                 membersID.remove(i);
                             }
                         }
-                        Log.d("test send", "list of member from group:" + membersID.toString());
-
-
                         for (int i = 0; i < membersID.size(); i++) {
                             final String currentMem = membersID.get(i);
-                            Log.d("test send", "current member: " + currentMem);
-
                             DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
                             DatabaseReference searchRef = rootRef.child("userToken");
                             ValueEventListener valueEventListener = new ValueEventListener() {
                                 @Override
                                 public void onDataChange(DataSnapshot dataSnapshot) {
-
                                     for (DataSnapshot ds : dataSnapshot.getChildren()) {
                                         String value = ds.getValue(UserToken.class).getUid();
-                                        Log.d("test send", "user id in token tbl: " + value);
-
                                         if (value.equalsIgnoreCase(currentMem)) {
-                                            Log.d("test send", "found user id and sending to token:" + ds.getValue(UserToken.class).getToken());
-
                                             Helper.sendNotification(ds.getValue(UserToken.class).getToken(),
                                                     displayName, Helper.getCurrentUser().getDisplayName(),
                                                     contentNoti);
@@ -175,7 +147,6 @@ public class Helper {
                         break;
                     }
                 }
-                Log.d("TAG", listUser.toString());
             }
 
             @Override
@@ -196,13 +167,31 @@ public class Helper {
         ValueEventListener valueEventListener = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-
+                if (dataSnapshot.getChildrenCount() == 0 || !dataSnapshot.hasChildren()) {
+                    FirebaseInstanceId.getInstance().getInstanceId()
+                            .addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
+                                @Override
+                                public void onComplete(@NonNull Task<InstanceIdResult> task) {
+                                    if (!task.isSuccessful()) {
+                                        return;
+                                    }
+                                    final String tokenStr = task.getResult().getToken();
+                                    doneAdd = true;
+                                    DatabaseReference databaseReference;
+                                    databaseReference = FirebaseDatabase.getInstance().getReference("userToken");
+                                    String idToken = databaseReference.push().getKey();
+                                    UserToken token = new UserToken();
+                                    token.setToken(tokenStr);
+                                    token.setUid(getCurrentUser().getUid());
+                                    databaseReference.child(idToken).setValue(token);
+                                    return;
+                                }
+                            });
+                }
                 for (DataSnapshot ds : dataSnapshot.getChildren()) {
-
-                    if (doneAdd == false) {
+                    if (!doneAdd) {
                         String value = ds.getValue(UserToken.class).getUid();
                         String token = ds.getValue(UserToken.class).getToken();
-
                         listUser.add(value);
                         listToken.add(token);
                         FirebaseInstanceId.getInstance().getInstanceId()
@@ -214,16 +203,13 @@ public class Helper {
                                         }
                                         // Get new Instance ID token
                                         final String tokenStr = task.getResult().getToken();
-                                        Log.d("mytoken", tokenStr);
                                         for (int i = 0; i < listUser.size(); i++) {
-                                            Log.d("special", listUser.toString());
                                             if (listUser.get(i).equalsIgnoreCase(getCurrentUser().getUid()) && listToken.get(i).equalsIgnoreCase(tokenStr)) {
                                                 add = false;
                                                 break;
                                             }
                                         }
-                                        Log.d("TAG", getCurrentUser().getUid() + ": " + add);
-                                        if (add == true && doneAdd == false) {
+                                        if (add && !doneAdd) {
                                             doneAdd = true;
                                             DatabaseReference databaseReference;
                                             databaseReference = FirebaseDatabase.getInstance().getReference("userToken");
@@ -238,7 +224,6 @@ public class Helper {
                                 });
                     }
                 }
-                Log.d("TAG", listUser.toString());
             }
 
             @Override
@@ -249,7 +234,7 @@ public class Helper {
         searchRef.addListenerForSingleValueEvent(valueEventListener);
     }
 
-    static String tempGID;
+    private static String tempGID;
 
     public static void notiRep(final String msg, final String displayName) {
 
@@ -261,12 +246,8 @@ public class Helper {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot ds : dataSnapshot.getChildren()) {
                     String value = ds.getValue(Group.class).getDisplayName();
-                    Log.d("bigboy", "bigboi Name " + value);
-
                     if (value.equalsIgnoreCase(displayName)) {
-                        Log.d("bigboy", "bigboi ding ding ding: " + value + " = " + displayName);
                         tempGID = ds.getValue(Group.class).getId();
-                        Log.d("bigboy", "bigboi ding ding ding ID: " + tempGID);
                         sendMessage(msg, Message.TEXT, "NONE", displayName, tempGID);
                     }
                 }
@@ -281,7 +262,7 @@ public class Helper {
     }
 
 
-    public static void getAccessToken(final IAccessTokenCallback iAccessTokenCallback) {
+    static void getAccessToken(final IAccessTokenCallback iAccessTokenCallback) {
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
         if (currentUser != null) {
             currentUser.getIdToken(true)
